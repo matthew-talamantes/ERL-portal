@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'dj_rest_auth',
 
     # Local
-    'useraccount.apps.UseraccountConfig'
+    'useraccount.apps.UseraccountConfig',
+    'events.apps.EventsConfig',
 ]
 
 MIDDLEWARE = [
