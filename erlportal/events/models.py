@@ -4,7 +4,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 # Create your models here.
 class Event(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50, blank=False)
     eventType = models.CharField(verbose_name='type', max_length=5, default='event', editable=False)
     year = models.CharField(max_length=4, blank=False)
