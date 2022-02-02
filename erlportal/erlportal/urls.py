@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    # For rest tutorial rewrite for actual release
+    path('', include('events.urls')),
 ]
 
 if settings.DEBUG:
