@@ -6,9 +6,11 @@ from django.urls import reverse
 
 from phonenumber_field.modelfields import PhoneNumberField
 from PIL import Image
+import uuid
 
 # Create your models here.
 class ErlUser(AbstractUser):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     def __str__(self):
         return self.username
 
