@@ -23,11 +23,12 @@ class Event(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        if Event.objects.filter(slug=self.slug).exists():
+        if Event.objects.filter(slug=self.slug).exists() and not Event.objects.filter(uid=self.uid).exists():
             validSlug = False
             count = 1
+            baseSlug = self.slug
             while not validSlug:
-                self.slug += f'-{count}'
+                self.slug = f'{baseSlug}-{count}'
                 if Event.objects.filter(slug=self.slug).exists():
                     count += 1
                 else:
