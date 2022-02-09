@@ -14,7 +14,7 @@ from .serializers import EventSerializer
 # Create your views here.
 
 @api_view(['GET', 'POST'])
-def event_list(request):
+def event_list(request, format=None):
     """
         List all events or create new event
     """
@@ -31,7 +31,7 @@ def event_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def event_detail(request, slug):
+def event_detail(request, slug, format=None):
     """
         Retrieve, update or delete an event.
     """
