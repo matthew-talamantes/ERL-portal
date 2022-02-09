@@ -2,6 +2,9 @@ from django.db import models
 import uuid
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.db.utils import IntegrityError
+from django.db import transaction
+
 # Create your models here.
 class Event(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -20,6 +23,15 @@ class Event(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        if Event.objects.filter(slug=self.slug).exists():
+            validSlug = False
+            count = 1
+            while not validSlug:
+                self.slug += f'-{count}'
+                if Event.objects.filter(slug=self.slug).exists():
+                    count += 1
+                else:
+                    validSlug = True
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
