@@ -13,7 +13,7 @@ class Event(models.Model):
     startTime = models.CharField(max_length=5, blank=False)
     endTime = models.CharField(max_length=5, blank=False)
     description = models.TextField()
-    slug = models.SlugField(null=True, unique=True)
+    slug = models.SlugField(null=True, blank=True, unique=True)
 
     def __str__(self):
         return f'{self.title}'

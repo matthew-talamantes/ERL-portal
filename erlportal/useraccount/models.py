@@ -28,7 +28,7 @@ class Profile(models.Model):
     shareName = models.BooleanField(verbose_name='Share Name', default=False)
     contactPreference = models.CharField(verbose_name='Contact Preference', max_length=5, choices=contactChoices, default=EMAIL)
     birthDate = models.DateField(verbose_name='Birthday', blank=False)
-    slug = models.SlugField(null=True, unique=True)
+    slug = models.SlugField(null=True, blank=True, unique=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
