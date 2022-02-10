@@ -48,25 +48,53 @@ class EventList(APIView):
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def event_detail(request, slug, format=None):
+class EventDetail(APIView):
     """
-        Retrieve, update or delete an event.
+        Retrieve, update or delete a snippet instance.
     """
-    try:
-        event = Event.objects.get(slug=slug)
-    except Event.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    def get_object(self, slug):
+        try:
+            return Event.objects.get(slug=slug)
+        except Event.DoesNotExist:
+            raise Http404
 
-    if request.method == 'GET':
+    def get(self, request, slug, format=None):
+        event = self.get_object(slug)
         serializer = EventSerializer(event)
         return Response(serializer.data)
-    elif request.method == 'PUT':
+
+    def put(self, request, slug, format=None):
+        event = self.get_object(slug)
         serializer = EventSerializer(event, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
+
+    def delete(self, request, slug, format=None):
+        event = self.get_object(slug)
         event.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def event_detail(request, slug, format=None):
+#     """
+#         Retrieve, update or delete an event.
+#     """
+#     try:
+#         event = Event.objects.get(slug=slug)
+#     except Event.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+
+#     if request.method == 'GET':
+#         serializer = EventSerializer(event)
+#         return Response(serializer.data)
+#     elif request.method == 'PUT':
+#         serializer = EventSerializer(event, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     elif request.method == 'DELETE':
+#         event.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
