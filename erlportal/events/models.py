@@ -16,8 +16,8 @@ class Event(models.Model):
     startTime = models.DateTimeField(blank=False)
     endTime = models.DateTimeField(blank=False)
     description = models.TextField()
-    slug = models.SlugField(null=True, blank=True, unique=True)
-    dateCreated = models.DateTimeField(default=timezone.now)
+    slug = models.SlugField(null=True, blank=True, unique=True, editable=False)
+    dateCreated = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):
         return f'{self.title}'
