@@ -24,7 +24,8 @@ class Event(models.Model):
 
     def clean(self):
         # Validate that the endTime is after the startTime
-        if self.startTime - self.endTime <= 0:
+        timeDiff = self.startTime - self.endTime
+        if timeDiff.seconds >= 0:
             raise ValidationError(_('Must set an end time that is after the start time.'))
 
     def save(self, *args, **kwargs):
