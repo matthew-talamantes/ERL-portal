@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.db.utils import IntegrityError
 from django.db import transaction
+from django.utils import timezone
 
 # Create your models here.
 class Event(models.Model):
@@ -17,6 +18,7 @@ class Event(models.Model):
     endTime = models.CharField(max_length=5, blank=False)
     description = models.TextField()
     slug = models.SlugField(null=True, blank=True, unique=True)
+    dateCreated = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f'{self.title}'
