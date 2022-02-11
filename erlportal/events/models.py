@@ -27,8 +27,8 @@ class Event(models.Model):
         timeDiff = self.startTime - self.endTime
         if timeDiff.seconds >= 0:
             raise ValidationError(_('Must set an end time that is after the start time.'))
-
-    def save(self, *args, **kwargs):
+        
+        # Generate slug
         self.slug = slugify(self.title)
         if Event.objects.filter(slug=self.slug).exists() and not Event.objects.filter(uid=self.uid).exists():
             validSlug = False
@@ -40,6 +40,9 @@ class Event(models.Model):
                     count += 1
                 else:
                     validSlug = True
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
