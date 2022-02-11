@@ -5,7 +5,6 @@ from .models import Event
 class EventSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
-        
         if data['endTime'] <= data['startTime']:
             raise serializers.ValidationError('End Time must be after Start Time.')
         return data
