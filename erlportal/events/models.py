@@ -25,7 +25,7 @@ class Event(models.Model):
     def clean(self):
         # Validate that the endTime is after the startTime
         timeDiff = self.startTime - self.endTime
-        if timeDiff.seconds >= 0:
+        if self.endTime <= self.startTime:
             raise ValidationError(_('Must set an end time that is after the start time.'))
         
         # Generate slug
