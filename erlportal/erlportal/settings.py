@@ -51,9 +51,9 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Local
+    'pages.apps.PagesConfig',
     'useraccount.apps.UseraccountConfig',
     'events.apps.EventsConfig',
-    'pages.apps.PagesConfig',
 ]
 
 MIDDLEWARE = [
@@ -171,7 +171,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 # Crispy Forms settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
-CRISPY_TEMPLATE_PACK = 'bootarap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Cors-headers settings
 CORS_ALLOWED_ORIGINS = [

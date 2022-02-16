@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('useraccount.urls')),
     path('', include('pages.urls')),
     # For rest tutorial rewrite for actual release
     path('api/', include('events.urls')),
