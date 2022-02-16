@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Local
     'useraccount.apps.UseraccountConfig',
     'events.apps.EventsConfig',
+    'pages.apps.PagesConfig',
 ]
 
 MIDDLEWARE = [
