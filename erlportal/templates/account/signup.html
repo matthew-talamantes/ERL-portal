@@ -2,18 +2,22 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="container justify-content-center">
-        <div class="row">
-            <h2>Sign Up</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <h2>Sign Up</h2>
+            </div>
         </div>
-        <div class="row">
-            <form method="POST">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                    {{ form|crispy }}
-                    <button class="btn btn-outline-info" type="submit">Sign Up</button>
-                </fieldset>
-            </form>
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+                        <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock content %}
