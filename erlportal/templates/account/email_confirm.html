@@ -1,0 +1,20 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <section class="row">
+            <div class="col-4">
+                <h1>Confirm E-mail Address</h1>
+                {% if confirmation %}
+                    <p>Please confirm that <strong>{{ confirmation.email_address.email }}</strong> is an e-mail address for user {{ confirmation.email_address.user }}.</p>
+                    <form method="POST" action="{% url 'account_confirm_email' confirmation.key %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    </form>
+                {% else %}
+                    <p>This e-mail confirmation link expired or is invalid. Please <a href="{% url 'account_email' %}">issue a new e-mail confirmation request</a>.</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+{% endblock content%}
