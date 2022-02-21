@@ -165,8 +165,8 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
 
 # Uncomment the following two lines when I add a home page
-# LOGIN_REDIRECT_URL = 'home'
-# ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 
 # Crispy Forms settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
