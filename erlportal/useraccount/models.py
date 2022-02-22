@@ -20,7 +20,7 @@ class Profile(models.Model):
     contactChoices = [(PHONE, 'Phone'), (EMAIL, 'E-Mail')]
 
     user = models.OneToOneField(ErlUser, on_delete=models.CASCADE)
-    image = models.ImageField(verbose_name='Profile Image', default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(verbose_name='Profile Image', default='default.jpg', upload_to='profile_pics', blank=True)
     firstName = models.CharField(verbose_name='First Name', max_length=25, blank=False)
     middleName = models.CharField(verbose_name='Middle Name', max_length=25, blank=True)
     lastName = models.CharField(verbose_name='Last Name', max_length=25, blank=False)
