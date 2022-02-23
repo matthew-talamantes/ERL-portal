@@ -1,13 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.forms.models import inlineformset_factory
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 from allauth.account.forms import SignupForm
 
 from phonenumber_field.formfields import PhoneNumberField
 
 from PIL import Image
+import os
 
 from .models import ErlUser, Profile
 
@@ -51,18 +50,17 @@ class ErlSignupForm(SignupForm):
         self.fields['contactPreference'] = forms.ChoiceField(label='Contact Preference', choices=self.contactChoices)
         self.fields['birthDate'] = forms.DateField(label='Birthdate', input_formats=['%m-%d-%Y'], widget=forms.DateInput(attrs={'placeholder': 'MM-DD-YYYY'}))
         self.fields['image'] = forms.ImageField(label='Profile Image', required=False)
-    
-
-    def clean_image(self):
-        print('hello')
-        print('world')
-        # file_data = {'image': SimpleUploadedFile(self.cleaned_data['image'], self.imgFile['image'])}
 
     def save(self, request):
         user = super().save(request)
-        data =self.cleaned_data
-        # custom processing here
-        profile = Profile(user=user, image=self.imgFile['image'], firstName=data['firstName'], middleName=data['middleName'], lastName=data['lastName'], phoneNumber=data['phoneNumber'], shareName=data['shareName'], contactPreference=data['contactPreference'], birthDate=data['birthDate'])
+        # Custom processing here
+        data = self.cleaned_data
+
+        if data['image'] == None:
+            profile = Profile(user=user, firstName=data['firstName'], middleName=data['middleName'], lastName=data['lastName'], phoneNumber=data['phoneNumber'], shareName=data['shareName'], contactPreference=data['contactPreference'], birthDate=data['birthDate'])
+        else:
+            profile = Profile(user=user, image=self.imgFile['image'], firstName=data['firstName'], middleName=data['middleName'], lastName=data['lastName'], phoneNumber=data['phoneNumber'], shareName=data['shareName'], contactPreference=data['contactPreference'], birthDate=data['birthDate'])
+
         profile.save()
         return user
 
