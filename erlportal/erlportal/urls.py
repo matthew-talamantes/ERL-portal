@@ -18,8 +18,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# from useraccount.views import ErlSignup
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('accounts/signup/', ErlSignup.as_view(), name='signup'),
     path('accounts/', include('useraccount.urls')),
     path('', include('pages.urls')),
     # For rest tutorial rewrite for actual release

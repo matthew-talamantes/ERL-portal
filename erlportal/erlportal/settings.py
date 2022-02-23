@@ -164,6 +164,10 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
 
+ACCOUNT_FORMS = {
+    # 'signup': 'useraccount.forms.ErlSignupForm',
+}
+
 # Uncomment the following two lines when I add a home page
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
