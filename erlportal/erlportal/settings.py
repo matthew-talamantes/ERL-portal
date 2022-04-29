@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
+    'dj_rest_auth.registration',
     'corsheaders',
 
     # Local
@@ -179,6 +180,10 @@ REST_FRAMEWORK = {
 # Uncomment the following two lines when I add a home page
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
+
+# dj-rest-auth settings
+REST_SESSION_LOGIN = True
+REST_AUTH_TOKEN_MODEL = None
 
 # Crispy Forms settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'

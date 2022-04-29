@@ -18,6 +18,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from dj_rest_auth.registration.views import VerifyEmailView
+
 from useraccount.views import ErlSignup
 
 urlpatterns = [
@@ -25,6 +27,9 @@ urlpatterns = [
     path('accounts/signup/', ErlSignup.as_view(), name='signup'),
     path('accounts/', include('useraccount.urls')),
     path('', include('pages.urls')),
+    path('api-auth/', include('dj_rest_auth.urls')),
+    path('api-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('api-auth/registration/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
     # For rest tutorial rewrite for actual release
     path('api/', include('events.urls')),
 ]
