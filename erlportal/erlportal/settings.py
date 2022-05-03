@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'rest_framework_simplejwt',
     'corsheaders',
 
     # Local
@@ -173,7 +174,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
 
@@ -182,8 +183,12 @@ LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 
 # dj-rest-auth settings
-REST_SESSION_LOGIN = True
+REST_SESSION_LOGIN = False
+REST_USE_JWT = True
 REST_AUTH_TOKEN_MODEL = None
+OLD_PASSWORD_FIELD_ENABLED = True
+JWT_AUTH_COOKIE = 'erl-auth'
+JWT_AUTH_REFRESH_COOKIE = 'erl-refresh-token'
 
 # Crispy Forms settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
@@ -193,4 +198,18 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # Cors-headers settings
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'http://127.0.0.1:8000',
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:8000',
+]
+CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_HTTPONLY = False
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SAMESITE = 'None'
+
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'uuid',
+}

@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from dj_rest_auth.registration.views import VerifyEmailView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from useraccount.views import ErlSignup
 
@@ -30,6 +31,8 @@ urlpatterns = [
     path('api-auth/', include('dj_rest_auth.urls')),
     path('api-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api-auth/registration/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
+    path('api-auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api-auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # For rest tutorial rewrite for actual release
     path('api/', include('events.urls')),
 ]
