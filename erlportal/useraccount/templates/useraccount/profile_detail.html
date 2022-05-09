@@ -1,0 +1,21 @@
+{% extends "pages/base.html" %}
+{% block content %}
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ object.image.url }}">
+    <h2>{{ object.user.username }}</h2>
+    <div class="media-body">
+        <div class="article-metadata">
+            {% if object.user == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'profile' %}">Update Profile</a>
+            </div>
+            {% endif %}
+        </div>
+        <section>
+            {% if object.shareName %}
+            <h3>{{ object.firstName }} {{ object.middleName }} {{ object.lastName }}</h3>
+            {% endif %}
+        </section>
+    </div>
+</article>
+{% endblock content %}
