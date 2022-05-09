@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-from allauth.account.views import SignupView
+from allauth.account.views import SignupView, ConfirmEmailView
+from rest_framework import permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from .forms import ProfileUpdateForm, ErlSignupForm
 from .models import Profile
@@ -36,3 +41,12 @@ class ErlSignup(SignupView):
 
 class UserProfile(DetailView):
     model = Profile
+
+class ConfirmEmailApiView(APIView, ConfirmEmailView):
+    def post(self, *args, **kwargs):
+        self.kwargs['key'] = self.request.data['key']
+        self.object = confirmation = super().get_object()
+        confirmation.confirm(self.request)
+        return Response({'success': 'Email Confirmed'})
+
+    
