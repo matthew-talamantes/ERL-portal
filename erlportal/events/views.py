@@ -43,7 +43,7 @@ class EventList(generics.ListCreateAPIView):
 
 class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-        Retrieve, update or delete a snippet instance.
+        Retrieve, update or delete a event instance.
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer

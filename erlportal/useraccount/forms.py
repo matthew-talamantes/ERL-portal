@@ -60,7 +60,12 @@ class ErlSignupForm(SignupForm):
             profile = Profile(user=user, firstName=data['firstName'], middleName=data['middleName'], lastName=data['lastName'], phoneNumber=data['phoneNumber'], shareName=data['shareName'], contactPreference=data['contactPreference'], birthDate=data['birthDate'])
         else:
             profile = Profile(user=user, image=self.imgFile['image'], firstName=data['firstName'], middleName=data['middleName'], lastName=data['lastName'], phoneNumber=data['phoneNumber'], shareName=data['shareName'], contactPreference=data['contactPreference'], birthDate=data['birthDate'])
-
-        profile.save()
-        return user
+        
+        try:
+            profile.save()
+            return user
+        except:
+            print('An errror occured')
+            
+        
 
