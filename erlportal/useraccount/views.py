@@ -28,7 +28,7 @@ def profile(request):
     context = {
         'p_form': p_form,
     }
-    return render(request, 'useraccounts/profile.html', context)
+    return render(request, 'useraccount/profile.html', context)
 
 class ErlSignup(SignupView):
     template_name = 'account/signup.html'
