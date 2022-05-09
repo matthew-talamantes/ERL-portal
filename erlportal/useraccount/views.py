@@ -5,7 +5,7 @@ from django.views.generic import DetailView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-from allauth.account.views import SignupView, ConfirmEmailView
+from allauth.account.views import SignupView, ConfirmEmailView, PasswordChangeView
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -41,6 +41,9 @@ class ErlSignup(SignupView):
 
 class UserProfile(DetailView):
     model = Profile
+
+class CustomPasswordChangeView(PasswordChangeView):
+    success_url = '/'
 
 class ConfirmEmailApiView(APIView, ConfirmEmailView):
     def post(self, *args, **kwargs):
