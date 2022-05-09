@@ -1,5 +1,7 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.core.files.images import ImageFile
 
 from allauth.account.forms import SignupForm
 
@@ -27,6 +29,15 @@ class ErlUserChangeForm(UserChangeForm):
 #             'shareName', 'contactPreference', 'birthDate']
 
 class ProfileUpdateForm(forms.ModelForm):
+
+    def clean_image(self):
+        uploaded_image = self.cleaned_data.get('image')
+        if not uploaded_image:
+            imgFile = open(settings.MEDIA_ROOT / 'default.jpg', 'rb')
+            uploaded_image = ImageFile(imgFile, name='default.jpg')
+
+        return uploaded_image
+        
     class Meta:
         model = Profile
         fields = ['image', 'firstName', 'middleName', 'lastName', 'phoneNumber',
