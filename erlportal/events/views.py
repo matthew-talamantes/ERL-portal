@@ -1,12 +1,11 @@
-# from django.shortcuts import render
-# from django.http import HttpResponse, JsonResponse, Http404
-# from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+from django.views.generic.base import TemplateView
+from django.conf import settings
+from django.utils import timezone
+from django.db.models import Q
 
-# from rest_framework.parsers import JSONParser
-# from rest_framework import status
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
+import datetime
+import calendar
 
 from rest_framework import generics
 
@@ -32,4 +31,16 @@ class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = EventSerializer
     lookup_field = 'slug'
 
+class CalendarView(TemplateView):
+    template_name = 'events/calendar.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        year = int(self.kwargs.get('year'))
+        month = int(self.kwargs.get('month'))
+        daysInMonth = calendar.monthrange(year, month)[1]
+        monthStart = timezone.make_aware(datetime.datetime(year, month, 1))
+        monthEnd = timezone.make_aware(datetime.datetime(year, month, daysInMonth))
+
+        context['events'] = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd))
+        return context
