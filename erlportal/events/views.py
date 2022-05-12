@@ -35,12 +35,15 @@ class CalendarView(TemplateView):
     template_name = 'events/calendar.html'
 
     def get_context_data(self, **kwargs):
+        months = ('January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')
         context = super().get_context_data(**kwargs)
         year = int(self.kwargs.get('year'))
         month = int(self.kwargs.get('month'))
         daysInMonth = calendar.monthrange(year, month)[1]
         monthStart = timezone.make_aware(datetime.datetime(year, month, 1))
         monthEnd = timezone.make_aware(datetime.datetime(year, month, daysInMonth))
-
+        context['year'] = year
+        context['month'] = month
+        context['monthName'] = months[month - 1]
         context['events'] = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd))
         return context

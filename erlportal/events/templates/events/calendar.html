@@ -1,8 +1,32 @@
 {% extends "pages/base.html" %}
+{% load static %}
+{% block headinfo %}
+<link rel="stylesheet" type="text/css" href="{% static 'events/calendar.css' %}" />
+{% endblock headinfo %}
 {% block content %}
-{% for event in events %}
+<h1>Calendar</h1>
+<a href="" id="btn-prev-month">
+    < </a>
+        <h2>{{ monthName }}, {{ year }}</h2>
+        <a href="" id="btn-next-month">></a>
+        <table id="calendar">
+            <thead class="day-names">
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+        <!-- {% for event in events %}
 <h1>{{ event.title }}</h1>
 <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
 <p>{{ event.description }}</p>
-{% endfor %}
-{% endblock content %}
+{% endfor %} -->
+        {{ year|json_script:"year"}}
+        {{ month|json_script:"month"}}
+        <script type="text/javascript" src="{% static 'events/calendar.js' %}"></script>
+        {% endblock content %}

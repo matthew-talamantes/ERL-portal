@@ -1,0 +1,18 @@
+table#calendar {
+  border: 1px black solid;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table#calendar thead.day-names th {
+  text-align: center;
+  border: 2px black solid;
+}
+
+table#calendar tbody#calendar-body td {
+  height: 10em;
+  text-align: left;
+  position: relative;
+  border: 1px black solid;
+}
+/*# sourceMappingURL=calendar.css.map */
