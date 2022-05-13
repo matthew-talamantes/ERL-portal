@@ -1,0 +1,15 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<section>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Delete Event</legend>
+            <h3>Are you sure you want to delete the event: {{ object.title }}?</h3>
+        </fieldset>
+        <a class="btn btn-outline-secondary" href="{% url 'event-detail' object.slug %}">Cancel</a>
+        <button class="btn btn-outline-danger" type="submit">Delete Event</button>
+    </form>
+</section>
+{% endblock content %}
