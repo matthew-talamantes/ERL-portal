@@ -21,6 +21,16 @@
             </thead>
             <tbody id="calendar-body"></tbody>
         </table>
+
+        <section>
+            {% for event in events %}
+            <article>
+                <h2>{{ event.title }}</h2>
+                <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
+                <p>{{ event.description }}</p>
+            </article>
+            {% endfor %}
+        </section>
         <!-- {% for event in events %}
 <h1>{{ event.title }}</h1>
 <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
