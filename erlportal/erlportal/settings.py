@@ -201,6 +201,10 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Cors-headers settings
+ALLOWED_HOSTS = [
+    '192.168.0.163',
+    '127.0.0.1',
+]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:8000',
