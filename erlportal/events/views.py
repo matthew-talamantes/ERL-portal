@@ -3,6 +3,13 @@ from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.utils import timezone
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import (
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 
 import datetime
 import calendar
@@ -30,6 +37,39 @@ class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     lookup_field = 'slug'
+
+class EventDetailView(LoginRequiredMixin, DetailView):
+    model = Event
+
+class EventCreateView(LoginRequiredMixin, UserPassesTestMixin,CreateView):
+    model = Event
+    fields = ['title', 'startTime', 'endTime', 'description', 'color']
+
+    def test_func(self):
+        if self.request.user.has_perm('can_edit_events'):
+            return True
+        else:
+            return False
+
+class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Event
+    fields = ['title', 'startTime', 'endTime', 'description', 'color']
+
+    def test_func(self):
+        if self.request.user.has_perm('can_edit_events'):
+            return True
+        else:
+            return False
+
+class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Event
+    success_url = '/'
+
+    def test_func(self):
+        if self.request.user.has_perm('can_edit_events'):
+            return True
+        else:
+            return False
 
 class CalendarView(TemplateView):
     template_name = 'events/calendar.html'
