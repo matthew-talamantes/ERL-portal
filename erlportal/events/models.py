@@ -57,3 +57,8 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse('event', kwargs={'slug': self.slug})
+
+    class Meta:
+        permissions = [
+            ('can_edit_events', 'Can add, edit, and delete events.'),
+        ]
