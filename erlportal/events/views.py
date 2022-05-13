@@ -1,3 +1,4 @@
+from django.forms import TextInput
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.conf import settings
@@ -15,6 +16,7 @@ import datetime
 import calendar
 
 from rest_framework import generics
+from colorfield.widgets import ColorWidget
 
 from .models import Event
 from .serializers import EventSerializer
@@ -45,6 +47,11 @@ class EventCreateView(LoginRequiredMixin, UserPassesTestMixin,CreateView):
     model = Event
     fields = ['title', 'startTime', 'endTime', 'description', 'color']
 
+    def get_form(self):
+        form = super().get_form()
+        form.fields['color'].widget = TextInput(attrs={'type': 'color'})
+        return form
+
     def test_func(self):
         if self.request.user.has_perm('can_edit_events'):
             return True
@@ -54,6 +61,11 @@ class EventCreateView(LoginRequiredMixin, UserPassesTestMixin,CreateView):
 class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Event
     fields = ['title', 'startTime', 'endTime', 'description', 'color']
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['color'].widget = TextInput(attrs={'type': 'color'})
+        return form
 
     def test_func(self):
         if self.request.user.has_perm('can_edit_events'):
