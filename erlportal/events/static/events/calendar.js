@@ -43,13 +43,13 @@ const buildCalendar = (month, year) => {
     let htmlOutput = '';
     dayList.forEach((item) => {
         if (weekDayCount === 0) {
-            htmlOutput += `<tr><td class="cal-day"><h4>${item}</h4></td>`
+            htmlOutput += `<tr><td class="cal-day"><div><h3>${item}</h3></div></td>`
             weekDayCount++;
         } else if (weekDayCount === 6) {
-            htmlOutput += `<td class="cal-day"><h4>${item}</h4></td></tr>`
+            htmlOutput += `<td class="cal-day"><div><h3>${item}</h3></div></td></tr>`
             weekDayCount = 0;
         } else {
-            htmlOutput += `<td class="cal-day"><h4>${item}</h4></td>`;
+            htmlOutput += `<td class="cal-day"><div><h3>${item}</h3></div></td>`;
             weekDayCount++;
         }
 

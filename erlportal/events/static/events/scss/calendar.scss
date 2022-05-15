@@ -16,6 +16,23 @@ table#calendar {
             text-align: left;
             position: relative;
             border: 1px black solid;
+
+            div {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(5, 1fr);
+                column-gap: 2px;
+                row-gap: 2px;
+
+                h3 {
+                    grid-column-start: 1;
+                    grid-column-end: 2;
+                    grid-row-start: 1;
+                    grid-row-end: 2;
+                }
+            }
         }
     }
 }
