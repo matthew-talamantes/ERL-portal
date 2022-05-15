@@ -49,6 +49,8 @@ class EventCreateView(LoginRequiredMixin, UserPassesTestMixin,CreateView):
 
     def get_form(self):
         form = super().get_form()
+        form.fields['startTime'].widget = TextInput(attrs={'type': 'datetime-local'})
+        form.fields['endTime'].widget = TextInput(attrs={'type': 'datetime-local'})
         form.fields['color'].widget = TextInput(attrs={'type': 'color'})
         return form
 
@@ -64,6 +66,8 @@ class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_form(self):
         form = super().get_form()
+        form.fields['startTime'].widget = TextInput(attrs={'type': 'datetime-local'})
+        form.fields['endTime'].widget = TextInput(attrs={'type': 'datetime-local'})
         form.fields['color'].widget = TextInput(attrs={'type': 'color'})
         return form
 
