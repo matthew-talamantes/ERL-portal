@@ -17,30 +17,36 @@
 </head>
 
 <body>
-    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark ps-4 pe-4">
         <a class="navbar-brand" href="{% url 'home' %}">ERL Portal</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <nav class="collapse navbar-collapse" id="navbarSupportedContent">
+        <nav class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                 {% now "Y" as year %}
                 {% now "n" as month %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'events-calendar' year=year  month=month%}">Events</a></li>
+                <li class="nav-item"><a class="nav-link"
+                        href="{% url 'events-calendar' year=year  month=month%}">Events</a></li>
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle btn btn-primary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle btn btn-primary" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         My Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{% url 'profile' %}">My Account</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'account_logout' %}"><span class="btn btn-danger">Logout</span></a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'account_logout' %}"><span
+                                    class="btn btn-danger">Logout</span></a></li>
                     </ul>
-                    </li>              
+                </li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link btn btn-primary" href="{% url 'account_login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary" href="{% url 'account_login' %}">Login</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -54,7 +60,9 @@
     {% endif %}
     {% block content %}{% endblock content %}
     {% block endbody %}{% endblock endbody %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
