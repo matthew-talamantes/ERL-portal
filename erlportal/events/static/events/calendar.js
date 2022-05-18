@@ -1,4 +1,13 @@
-const buildCalendar = (month, year) => {
+const buildCalDay = (dayNum, events=null) => {
+    htmlOutput = `<td class='cal-day'><h3 class='day-num'>${dayNum}</h3>`;
+    if (events !== null) {
+        events.forEach((event) => {
+            htmlOutput += `<div class='day-event' style="backgroundColor: ${event.color};"><a class='event-link' href="#${event.slug}"><h4>${event.title}`
+        })
+    }
+};
+
+const buildCalendar = (month, year, events=null) => {
     /*Month is 1 based when passed in. */
 
     let monthIndex = month - 1;
@@ -62,4 +71,14 @@ const buildCalendar = (month, year) => {
 
 const year = parseInt(JSON.parse(document.getElementById('year').textContent));
 const month = parseInt(JSON.parse(document.getElementById('month').textContent));
-buildCalendar(month, year);
+const eventsImport = JSON.parse(document.getElementById('eventsJson').textContent);
+events = eventsImport.map(event => {
+    return {
+        'title': event.title,
+        'slug': event.slug,
+        'color': event.color,
+        'startTime': new Date(event.startTime.slice(0, -1)),
+        'endTime': new Date(event.endTime.slice(0, -1)),
+    };
+});
+buildCalendar(month, year, events);

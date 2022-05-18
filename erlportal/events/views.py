@@ -1,5 +1,6 @@
 from django.forms import TextInput
 from django.shortcuts import render
+from django.core import serializers
 from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.utils import timezone
@@ -98,8 +99,15 @@ class CalendarView(TemplateView):
         daysInMonth = calendar.monthrange(year, month)[1]
         monthStart = timezone.make_aware(datetime.datetime(year, month, 1))
         monthEnd = timezone.make_aware(datetime.datetime(year, month, daysInMonth))
+        query = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd))
+        eventsJson = []
+        for item in query:
+            itemDict = {'title': item.title, 'slug': item.slug, 'startTime': item.startTime, 'endTime': item.endTime, 'color': item.color}
+            eventsJson.append(itemDict)
+
         context['year'] = year
         context['month'] = month
         context['monthName'] = months[month - 1]
-        context['events'] = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd))
+        context['events'] = query
+        context['eventsJson'] = eventsJson
         return context

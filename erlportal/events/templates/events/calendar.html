@@ -24,7 +24,7 @@
 
         <section>
             {% for event in events %}
-            <article style="border: 3px solid {{ event.color }};">
+            <article id="{{ event.slug }}" style="border: 3px solid {{ event.color }};">
                 <h2>{{ event.title }}</h2>
                 <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
                 <p>{{ event.description }}</p>
@@ -36,7 +36,8 @@
 <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
 <p>{{ event.description }}</p>
 {% endfor %} -->
-        {{ year|json_script:"year"}}
-        {{ month|json_script:"month"}}
+        {{ year|json_script:"year" }}
+        {{ month|json_script:"month" }}
+        {{ eventsJson|json_script:"eventsJson" }}
         <script type="text/javascript" src="{% static 'events/calendar.js' %}"></script>
         {% endblock content %}
