@@ -1,13 +1,12 @@
 const buildCalDay = (dayNum, events) => {
-    htmlOutput = `<td class='cal-day'><h3 class='day-num'>${dayNum}</h3>`;
+    htmlOutput = `<td class='cal-day'><div class='day-wrapper'><h3 class='day-num'>${dayNum}</h3>`;
     if (events.length > 0) {
-        let loopCount = 0;
         for ( let i = 0; i < events.length; i++) {
-            htmlOutput += `<div class='day-event' style="background-color: ${events[i].color};"><a class='event-link' href="#${events[i].slug}"><h4>${events[i].title}</h4>`
-            loopCount++;
+            let gridPos = i + 1;
+            htmlOutput += `<div class='day-event event-${gridPos}' style="background-color: ${events[i].color};"><a class='event-link' href="#${events[i].slug}"><h4>${events[i].title}</h4></div>`
         }
     }
-    htmlOutput += '</td>';
+    htmlOutput += '</div></td>';
     return htmlOutput;
 };
 
