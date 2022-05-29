@@ -1,10 +1,14 @@
-const buildCalDay = (dayNum, events=null) => {
+const buildCalDay = (dayNum, events) => {
     htmlOutput = `<td class='cal-day'><h3 class='day-num'>${dayNum}</h3>`;
-    if (events !== null) {
-        events.forEach((event) => {
-            htmlOutput += `<div class='day-event' style="backgroundColor: ${event.color};"><a class='event-link' href="#${event.slug}"><h4>${event.title}`
-        })
+    if (events.length > 0) {
+        let loopCount = 0;
+        for ( let i = 0; i < events.length; i++) {
+            htmlOutput += `<div class='day-event' style="background-color: ${events[i].color};"><a class='event-link' href="#${events[i].slug}"><h4>${events[i].title}</h4>`
+            loopCount++;
+        }
     }
+    htmlOutput += '</td>';
+    return htmlOutput;
 };
 
 const buildCalendar = (month, year, events=null) => {
@@ -34,17 +38,38 @@ const buildCalendar = (month, year, events=null) => {
 
 
     for (let i = 0; i < firstWeekday; i++) {
-        dayList.push('');
+        dayList.push({'dayNum': '', 'events': []});
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-        dayList.push(i);
+        if (events !== null) {
+            let dayEvents = [];
+            let currentDate = new Date(year, monthIndex, i);
+            for (let num = 0; num < events.length; num++) {
+                if ((events[num].startTime.getDate() === i || events[num].endTime.getDate() === i) || (events[num].startTime < currentDate && events[num].endTime > currentDate)) {
+                    dayEvents.push(events[num]);
+                }
+            }
+            dayEvents.sort((a, b) => {
+                    if (a.startTime < b.startTime) {
+                        return -1;
+                    }
+                    if (a.startTime > b.startTime) {
+                        return 1;
+                    }
+
+                    return 0;
+                });
+            dayList.push({'dayNum': i, 'events': dayEvents});
+        } else {
+            dayList.push({'dayNum': i, 'events': []})
+        }
     }
 
     if (lastWeekday < 6) {
         const trailingDays = 6 - lastWeekday;
         for (let i=0; i < trailingDays; i++) {
-            dayList.push('');
+            dayList.push({'dayNum': '', 'events': []});
         }
     }
     
@@ -52,13 +77,13 @@ const buildCalendar = (month, year, events=null) => {
     let htmlOutput = '';
     dayList.forEach((item) => {
         if (weekDayCount === 0) {
-            htmlOutput += `<tr><td class="cal-day"><div><h3>${item}</h3></div></td>`
+            htmlOutput += `<tr>${buildCalDay(item.dayNum, item.events)}`
             weekDayCount++;
         } else if (weekDayCount === 6) {
-            htmlOutput += `<td class="cal-day"><div><h3>${item}</h3></div></td></tr>`
+            htmlOutput += `${buildCalDay(item.dayNum, item.events)}</tr>`
             weekDayCount = 0;
         } else {
-            htmlOutput += `<td class="cal-day"><div><h3>${item}</h3></div></td>`;
+            htmlOutput += `${buildCalDay(item.dayNum, item.events)}`;
             weekDayCount++;
         }
 
