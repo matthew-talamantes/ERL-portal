@@ -45,7 +45,7 @@ const buildCalendar = (month, year, events=null) => {
             let dayEvents = [];
             let currentDate = new Date(year, monthIndex, i);
             for (let num = 0; num < events.length; num++) {
-                if ((events[num].startTime.getDate() === i || events[num].endTime.getDate() === i) || (events[num].startTime < currentDate && events[num].endTime > currentDate)) {
+                if (((events[num].startTime.getDate() === i && events[num].startTime.getMonth() === monthIndex) || (events[num].endTime.getDate() === i && events[num].endTime.getMonth() === monthIndex)) || (events[num].startTime < currentDate && events[num].endTime > currentDate)) {
                     dayEvents.push(events[num]);
                 }
             }
@@ -93,10 +93,11 @@ const buildCalendar = (month, year, events=null) => {
 
 };
 
-const year = parseInt(JSON.parse(document.getElementById('year').textContent));
-const month = parseInt(JSON.parse(document.getElementById('month').textContent));
-const eventsImport = JSON.parse(document.getElementById('eventsJson').textContent);
-events = eventsImport.map(event => {
+const paintScreen = () => {
+    const year = parseInt(JSON.parse(document.getElementById('year').textContent));
+    const month = parseInt(JSON.parse(document.getElementById('month').textContent));
+    const eventsImport = JSON.parse(document.getElementById('eventsJson').textContent);
+    events = eventsImport.map(event => {
     return {
         'title': event.title,
         'slug': event.slug,
@@ -104,5 +105,8 @@ events = eventsImport.map(event => {
         'startTime': new Date(event.startTime.slice(0, -1)),
         'endTime': new Date(event.endTime.slice(0, -1)),
     };
-});
-buildCalendar(month, year, events);
+    });
+    buildCalendar(month, year, events);
+};
+
+window.addEventListener('load', paintScreen());

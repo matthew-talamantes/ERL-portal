@@ -105,8 +105,8 @@ class CalendarView(TemplateView):
             itemDict = {'title': item.title, 'slug': item.slug, 'startTime': item.startTime, 'endTime': item.endTime, 'color': item.color}
             eventsJson.append(itemDict)
 
-        context['year'] = year
-        context['month'] = month
+        context['calYear'] = year
+        context['calMonth'] = month
         context['monthName'] = months[month - 1]
         context['events'] = query
         context['eventsJson'] = eventsJson

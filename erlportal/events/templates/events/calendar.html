@@ -31,13 +31,8 @@
             </article>
             {% endfor %}
         </section>
-        <!-- {% for event in events %}
-<h1>{{ event.title }}</h1>
-<h4>{{ event.startTime }} - {{ event.endTime }}</h4>
-<p>{{ event.description }}</p>
-{% endfor %} -->
-        {{ year|json_script:"year" }}
-        {{ month|json_script:"month" }}
+        {{ calYear|json_script:"year" }}
+        {{ calMonth|json_script:"month" }}
         {{ eventsJson|json_script:"eventsJson" }}
         <script type="text/javascript" src="{% static 'events/calendar.js' %}"></script>
         {% endblock content %}
