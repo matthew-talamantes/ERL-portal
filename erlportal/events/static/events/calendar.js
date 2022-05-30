@@ -1,6 +1,6 @@
-const buildCalDay = (dayNum, events) => {
-    const today = new Date();
-    if (today.getDate() == dayNum) {
+const buildCalDay = (dayNum, events, year, month, today) => {
+    const cellDay = new Date(year, month, dayNum);
+    if (today.toDateString() === cellDay.toDateString()) {
         htmlOutput = `<td class='cal-day'><div class='day-wrapper today'><h3 class='day-num'>${dayNum}</h3>`;
     } else {
         htmlOutput = `<td class='cal-day'><div class='day-wrapper'><h3 class='day-num'>${dayNum}</h3>`;
@@ -19,7 +19,7 @@ const buildCalendar = (month, year, events=null) => {
     /*Month is 1 based when passed in. */
 
     let monthIndex = month - 1;
-
+    const today = new Date();
     const calendar = document.getElementById("calendar-body");
     const prevBtn = document.getElementById('btn-prev-month');
     const nextBtn = document.getElementById('btn-next-month');
@@ -81,13 +81,13 @@ const buildCalendar = (month, year, events=null) => {
     let htmlOutput = '';
     dayList.forEach((item) => {
         if (weekDayCount === 0) {
-            htmlOutput += `<tr>${buildCalDay(item.dayNum, item.events)}`
+            htmlOutput += `<tr>${buildCalDay(item.dayNum, item.events, year, monthIndex, today)}`
             weekDayCount++;
         } else if (weekDayCount === 6) {
-            htmlOutput += `${buildCalDay(item.dayNum, item.events)}</tr>`
+            htmlOutput += `${buildCalDay(item.dayNum, item.events, year, monthIndex, today)}</tr>`
             weekDayCount = 0;
         } else {
-            htmlOutput += `${buildCalDay(item.dayNum, item.events)}`;
+            htmlOutput += `${buildCalDay(item.dayNum, item.events, year, monthIndex, today)}`;
             weekDayCount++;
         }
 
