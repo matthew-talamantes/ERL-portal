@@ -16,6 +16,10 @@ table#calendar tbody#calendar-body td {
   border: 1px black solid;
 }
 
+table#calendar tbody#calendar-body td .today {
+  border: 3px red solid;
+}
+
 table#calendar tbody#calendar-body td div.day-wrapper {
   width: 100%;
   height: 100%;
@@ -28,6 +32,7 @@ table#calendar tbody#calendar-body td div.day-wrapper {
   -webkit-column-gap: 2px;
           column-gap: 2px;
   row-gap: 2px;
+  padding: 3px;
 }
 
 table#calendar tbody#calendar-body td div.day-wrapper h3 {

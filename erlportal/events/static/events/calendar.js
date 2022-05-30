@@ -1,5 +1,10 @@
 const buildCalDay = (dayNum, events) => {
-    htmlOutput = `<td class='cal-day'><div class='day-wrapper'><h3 class='day-num'>${dayNum}</h3>`;
+    const today = new Date();
+    if (today.getDate() == dayNum) {
+        htmlOutput = `<td class='cal-day'><div class='day-wrapper today'><h3 class='day-num'>${dayNum}</h3>`;
+    } else {
+        htmlOutput = `<td class='cal-day'><div class='day-wrapper'><h3 class='day-num'>${dayNum}</h3>`;
+    }
     if (events.length > 0) {
         for ( let i = 0; i < events.length; i++) {
             let gridPos = i + 1;
