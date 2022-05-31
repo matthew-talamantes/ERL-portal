@@ -41,8 +41,20 @@ class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = EventSerializer
     lookup_field = 'slug'
 
-class EventDetailView(LoginRequiredMixin, DetailView):
+class EventDetailView(UserPassesTestMixin, DetailView):
     model = Event
+
+    def test_func(self):
+        event = self.get_object()
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+            return True
+        if event.viewPerms == 'public':
+            return True
+        elif event.viewPerms == 'volunteers' and user.groups.filter(name='Volunteer').exists():
+            return True
+        else:
+            return False
 
 class EventCreateView(LoginRequiredMixin, UserPassesTestMixin,CreateView):
     model = Event
@@ -93,13 +105,19 @@ class CalendarView(TemplateView):
 
     def get_context_data(self, **kwargs):
         months = ('January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')
+        user = self.request.user
         context = super().get_context_data(**kwargs)
         year = int(self.kwargs.get('year'))
         month = int(self.kwargs.get('month'))
         daysInMonth = calendar.monthrange(year, month)[1]
         monthStart = timezone.make_aware(datetime.datetime(year, month, 1))
         monthEnd = timezone.make_aware(datetime.datetime(year, month, daysInMonth))
-        query = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd))
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+            query = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd))
+        elif user.groups.filter(name='Volunteer').exists():
+            query = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd)).filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
+        else:
+            query = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd)).filter(Q(viewPerms='public'))
         eventsJson = []
         for item in query:
             itemDict = {'title': item.title, 'slug': item.slug, 'startTime': item.startTime, 'endTime': item.endTime, 'color': item.color}
