@@ -20,12 +20,20 @@ class Event(models.Model):
         ('#830fdb', 'Purple',),
         ('#1E2EDE', 'Blue',),
     ]
+
+    VIEW_PERMS = [
+        ('public', 'Everyone',),
+        ('volunteers', 'Volunteers',),
+        ('staff', 'Staff',),
+    ]
+
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50, blank=False)
     eventType = models.CharField(verbose_name='type', max_length=5, default='event', editable=False)
     startTime = models.DateTimeField(blank=False)
     endTime = models.DateTimeField(blank=False)
     description = models.TextField()
+    viewPerms =models.CharField(verbose_name='Who can see this event', max_length=10, choices=VIEW_PERMS, default='volunteers', blank=False, null=False)
     color = ColorField(default='#d66118', samples=COLOR_PALETTE, null=False)
     slug = models.SlugField(null=True, blank=True, unique=True, editable=False)
     dateCreated = models.DateTimeField(default=timezone.now, editable=False)
