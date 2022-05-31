@@ -1,0 +1,40 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% block headinfo %}
+<link rel="stylesheet" type="text/css" href="{% static 'events/calendar.css' %}" />
+{% endblock headinfo %}
+{% block content %}
+<h1>Calendar</h1>
+<a href="" id="btn-prev-month">
+    < </a>
+        <h2>{{ monthName }}, {{ year }}</h2>
+        <a href="" id="btn-next-month">></a>
+        <table id="calendar">
+            <thead class="day-names">
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+
+        <section>
+            {% for event in events %}
+            <article id="{{ event.slug }}" style="border: 3px solid {{ event.color }};">
+                <a href="{% url 'event-detail' event.slug %}">
+                    <h2>{{ event.title }}</h2>
+                </a>
+                <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
+                <p>{{ event.description }}</p>
+            </article>
+            {% endfor %}
+        </section>
+        {{ calYear|json_script:"year" }}
+        {{ calMonth|json_script:"month" }}
+        {{ eventsJson|json_script:"eventsJson" }}
+        <script type="text/javascript" src="{% static 'events/calendar.js' %}"></script>
+        {% endblock content %}

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'rest_framework_simplejwt',
     'corsheaders',
+    'colorfield',
 
     # Local
     'pages.apps.PagesConfig',
@@ -139,6 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "static"
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
@@ -196,6 +201,10 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Cors-headers settings
+ALLOWED_HOSTS = [
+    '192.168.0.163',
+    '127.0.0.1',
+]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:8000',

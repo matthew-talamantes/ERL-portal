@@ -35,7 +35,7 @@ urlpatterns = [
     path('api-auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api-auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # For rest tutorial rewrite for actual release
-    path('api/', include('events.urls')),
+    path('events/', include('events.urls')),
 ]
 
 if settings.DEBUG:

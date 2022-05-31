@@ -1,0 +1,17 @@
+{% extends "pages/base.html" %}
+{% load event_extras %}
+
+{% block content %}
+<section>
+    <article style="border: 3px solid {{ object.color }};">
+        <h1>{{ object.title }}</h1>
+        <h5>Event Added On: {{ object.dateCreated|date:"M d Y" }}</h5>
+        <h3>{{ object.startTime|date:"g:iA D, M d, Y" }} - {{ object.endTime|date:"g:iA D, M d, Y" }}</h3>
+        {% if request.user|has_group:"Staff" or request.user|has_group:"WebAdmin" %}
+        <h3>Visability:</h3>
+        <h4>{{ object.viewPerms }}</h4>
+        {% endif %}
+        <p>{{ object.description }}</p>
+    </article>
+</section>
+{% endblock content %}

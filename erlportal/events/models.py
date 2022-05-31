@@ -8,14 +8,33 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
+from colorfield.fields import ColorField
+
 # Create your models here.
 class Event(models.Model):
+
+    COLOR_PALETTE = [
+        ('#06BEE1', 'Cyan',),
+        ('#D90368', 'Rose',),
+        ('#35CE8D', 'Caribbean Green',),
+        ('#830fdb', 'Purple',),
+        ('#1E2EDE', 'Blue',),
+    ]
+
+    VIEW_PERMS = [
+        ('public', 'Everyone',),
+        ('volunteers', 'Volunteers',),
+        ('staff', 'Staff',),
+    ]
+
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50, blank=False)
     eventType = models.CharField(verbose_name='type', max_length=5, default='event', editable=False)
     startTime = models.DateTimeField(blank=False)
     endTime = models.DateTimeField(blank=False)
     description = models.TextField()
+    viewPerms =models.CharField(verbose_name='Who can see this event', max_length=10, choices=VIEW_PERMS, default='volunteers', blank=False, null=False)
+    color = ColorField(default='#d66118', samples=COLOR_PALETTE, null=False)
     slug = models.SlugField(null=True, blank=True, unique=True, editable=False)
     dateCreated = models.DateTimeField(default=timezone.now, editable=False)
 
@@ -46,3 +65,8 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse('event', kwargs={'slug': self.slug})
+
+    class Meta:
+        permissions = [
+            ('can_edit_events', 'Can add, edit, and delete events.'),
+        ]
