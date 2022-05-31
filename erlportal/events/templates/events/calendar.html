@@ -25,7 +25,9 @@
         <section>
             {% for event in events %}
             <article id="{{ event.slug }}" style="border: 3px solid {{ event.color }};">
-                <h2>{{ event.title }}</h2>
+                <a href="{% url 'event-detail' event.slug %}">
+                    <h2>{{ event.title }}</h2>
+                </a>
                 <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
                 <p>{{ event.description }}</p>
             </article>
