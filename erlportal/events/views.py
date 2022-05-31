@@ -46,7 +46,7 @@ class EventDetailView(LoginRequiredMixin, DetailView):
 
 class EventCreateView(LoginRequiredMixin, UserPassesTestMixin,CreateView):
     model = Event
-    fields = ['title', 'startTime', 'endTime', 'description', 'color']
+    fields = ['title', 'startTime', 'endTime', 'description', 'viewPerms', 'color']
 
     def get_form(self):
         form = super().get_form()
@@ -63,7 +63,7 @@ class EventCreateView(LoginRequiredMixin, UserPassesTestMixin,CreateView):
 
 class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Event
-    fields = ['title', 'startTime', 'endTime', 'description', 'color']
+    fields = ['title', 'startTime', 'endTime', 'description', 'viewPerms', 'color']
 
     def get_form(self):
         form = super().get_form()
