@@ -3,15 +3,18 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DetailView, ListView
+from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.urls import reverse_lazy
+import copy
 
 from allauth.account.views import SignupView, ConfirmEmailView, PasswordChangeView
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .forms import ProfileUpdateForm, ErlSignupForm
+from .forms import ProfileUpdateForm, ErlSignupForm, ApproveUserForm
 from .models import Profile, ErlUser
 
 # Create your views here.
@@ -53,11 +56,11 @@ class ConfirmEmailApiView(APIView, ConfirmEmailView):
         confirmation.confirm(self.request)
         return Response({'success': 'Email Confirmed'})
 
-class PendingUsersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
-    model = ErlUser
+class PendingUsersListView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = 'useraccount/pending_users.html'
+    form_class = ApproveUserForm
     context_object_name = 'users'
-    paginate_by = 15
+    success_url = reverse_lazy('pending-users')
     
     def get_queryset(self):
         return ErlUser.objects.filter(groups__name='Pending')
@@ -74,12 +77,24 @@ class PendingUsersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         users = ErlUser.objects.filter(groups__name='Pending')
         profiles = []
         for user in users:
+            userForm = copy.deepcopy(context['form'])
+            userForm.fields['userName'].initial = user.username
             try:
-                profiles.append([user, Profile.objects.get(user=user)])
+                profiles.append([user, Profile.objects.get(user=user), userForm])
             except Profile.DoesNotExist:
-                profiles.append([user, None])
+                profiles.append([user, None, userForm])
         
         context['profiles'] = profiles
         return context
+
+    def form_valid(self, form):
+        username = form.cleaned_data['userName']
+        if 'approve-user' in self.request.POST:
+            form.approve_user(username)
+            messages.success(self.request, f'{username} has been approved')
+        elif 'reject-user' in self.request.POST:
+            form.reject_user(username)
+            messages.success(self.request, f'{username} has been rejected')
+        return super().form_valid(form)
 
     
