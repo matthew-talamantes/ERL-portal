@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.models import Group
 from django.core.files.images import ImageFile
 
 from allauth.account.forms import SignupForm
@@ -77,6 +78,24 @@ class ErlSignupForm(SignupForm):
             return user
         except:
             print('An errror occured')
+
+class ApproveUserForm(forms.Form):
+
+    userName = forms.CharField(widget=forms.HiddenInput)
+    def approve_user(self, name):
+        user = ErlUser.objects.get(username=name)
+        volGroup = Group.objects.get(name='Volunteer')
+        pendGroup = Group.objects.get(name='Pending')
+        user.groups.add(volGroup)
+        user.groups.remove(pendGroup)
+        user.save()
+
+    def reject_user(self, name):
+        user = ErlUser.objects.get(username=name)
+        pendGroup = Group.objects.get(name='Pending')
+        user.groups.remove(pendGroup)
+        user.is_active = False
+        user.save()
             
         
 
