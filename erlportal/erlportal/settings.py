@@ -47,9 +47,9 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'rest_framework',
     'rest_framework.authtoken',
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
-    'rest_framework_simplejwt',
+    # 'dj_rest_auth',
+    # 'dj_rest_auth.registration',
+    # 'rest_framework_simplejwt',
     'corsheaders',
     'colorfield',
 
@@ -177,9 +177,6 @@ ACCOUNT_FORMS = {
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
 

@@ -49,13 +49,6 @@ class UserProfile(DetailView):
 class CustomPasswordChangeView(PasswordChangeView):
     success_url = '/'
 
-class ConfirmEmailApiView(APIView, ConfirmEmailView):
-    def post(self, *args, **kwargs):
-        self.kwargs['key'] = self.request.data['key']
-        self.object = confirmation = super().get_object()
-        confirmation.confirm(self.request)
-        return Response({'success': 'Email Confirmed'})
-
 class PendingUsersListView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = 'useraccount/pending_users.html'
     form_class = ApproveUserForm
