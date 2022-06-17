@@ -30,6 +30,7 @@ class BaseShiftCreateView(LoginRequiredMixin, CreateView):
         form = super().get_form()
         form.fields['startTime'].widget = TextInput(attrs={'type': 'datetime-local'})
         form.fields['endTime'].widget = TextInput(attrs={'type': 'datetime-local'})
+        form.fields['endRepeat'].widget = TextInput(attrs={'type': 'date'})
         return form
 
     def form_valid(self, form):
@@ -44,6 +45,7 @@ class BaseShiftUpdateView(LoginRequiredMixin, UpdateView):
         form = super().get_form()
         form.fields['startTime'].widget = TextInput(attrs={'type': 'datetime-local'})
         form.fields['endTime'].widget = TextInput(attrs={'type': 'datetime-local'})
+        form.fields['endRepeat'].widget = TextInput(attrs={'type': 'date'})
         return form
 
 class BaseShiftDeleteView(LoginRequiredMixin, DeleteView):
