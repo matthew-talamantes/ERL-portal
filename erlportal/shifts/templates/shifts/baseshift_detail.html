@@ -1,0 +1,29 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<section>
+    <article>
+        <h1>{{ object.name }}</h1>
+        <h5>Created By: {{ object.createdBy }} | Created On: {{ object.dateCreated|date:"M d Y" }}</h5>
+        <p>{{ object.description }}</p>
+        <h3>{{ object.repeat }}</h3>
+        <h3>Shift Ends: {{ object.endRepeat|date:"M d Y" }}</h3>
+        <h3>{{ object.startTime|date:"g:iA" }} - {{ object.endTime|date:"g:iA" }}</h3>
+        <h4>Min Slots: {{ object.minSlots }}</h4>
+        <h4>Staff Slots: {{ object.staffSlots }}</h4>
+        <h4>Volunteer Slots: {{ object.volSlots }}</h4>
+        <h4>Default Staff:</h4>
+        <ul>
+            {% for staff in object.defaultStaff %}
+            <li>{{ staff.username }}</li>
+            {% endfor %}
+        </ul>
+        <h4>Default Volunteers:</h4>
+        <ul>
+            {% for vol in object.defaultVols %}
+            <li>{{ vol.username }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+</section>
+{% endblock content %}
