@@ -34,7 +34,7 @@ class BaseShift(models.Model):
     description = models.TextField(blank=True)
     startTime = models.DateTimeField(blank=False)
     endTime = models.DateTimeField(blank=False)
-    repeat = models.CharField(max_length=9, null=True, choices=REPEAT_CHOICES)
+    repeat = models.CharField(max_length=9, null=True, blank=True, choices=REPEAT_CHOICES)
     endRepeat = models.DateField(verbose_name='End Repeat',null=True, blank=True)
     staffSlots = models.IntegerField(blank=False)
     volSlots = models.IntegerField(blank=False)
