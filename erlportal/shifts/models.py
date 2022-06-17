@@ -34,13 +34,13 @@ class BaseShift(models.Model):
     description = models.TextField(blank=True)
     startTime = models.DateTimeField(blank=False)
     endTime = models.DateTimeField(blank=False)
-    repeat = models.CharField(choices=REPEAT_CHOICES)
+    repeat = models.CharField(max_length=9, choices=REPEAT_CHOICES)
     endRepeat = models.DateField(verbose_name='End Repeat', blank=True)
     staffSlots = models.IntegerField(blank=False)
     volSlots = models.IntegerField(blank=False)
     minSlots = models.IntegerField(verbose_name='Minimum Staff/volunteers', blank=False)
-    defaultStaff = models.ManyToManyField(ErlUser, related_name='default_staff', blank=True, null=True)
-    defaultVols = models.ManyToManyField(ErlUser, related_name='default_vols', blank=True, null=True)
+    defaultStaff = models.ManyToManyField(ErlUser, related_name='default_staff', blank=True)
+    defaultVols = models.ManyToManyField(ErlUser, related_name='default_vols', blank=True)
     slug = models.SlugField(blank=True, unique=True)
 
     def __str__(self):
