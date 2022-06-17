@@ -14,13 +14,13 @@
         <h4>Volunteer Slots: {{ object.volSlots }}</h4>
         <h4>Default Staff:</h4>
         <ul>
-            {% for staff in object.defaultStaff %}
+            {% for staff in object.defaultStaff.all %}
             <li>{{ staff.username }}</li>
             {% endfor %}
         </ul>
         <h4>Default Volunteers:</h4>
         <ul>
-            {% for vol in object.defaultVols %}
+            {% for vol in object.defaultVols.all %}
             <li>{{ vol.username }}</li>
             {% endfor %}
         </ul>
