@@ -39,8 +39,8 @@ class BaseShift(models.Model):
     staffSlots = models.IntegerField(blank=False)
     volSlots = models.IntegerField(blank=False)
     minSlots = models.IntegerField(verbose_name='Minimum Staff/volunteers', blank=False)
-    defaultStaff = models.ManyToManyField(ErlUser, related_name='default_staff', blank=True, null=True, on_delete=models.SET_NULL)
-    defaultVols = models.ManyToManyField(ErlUser, related_name='default_vols', blank=True, null=True, on_delete=models.SET_NULL)
+    defaultStaff = models.ManyToManyField(ErlUser, related_name='default_staff', blank=True, null=True)
+    defaultVols = models.ManyToManyField(ErlUser, related_name='default_vols', blank=True, null=True)
     slug = models.SlugField(blank=True, unique=True)
 
     def __str__(self):
