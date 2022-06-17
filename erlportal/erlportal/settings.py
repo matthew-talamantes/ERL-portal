@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'useraccount.apps.UseraccountConfig',
     'events.apps.EventsConfig',
+    'shifts.apps.ShiftsConfig',
 ]
 
 MIDDLEWARE = [
