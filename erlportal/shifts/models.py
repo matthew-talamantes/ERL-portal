@@ -32,8 +32,9 @@ class BaseShift(models.Model):
     dateCreated = models.DateTimeField(default=timezone.now)
     name = models.CharField(max_length=25, blank=False)
     description = models.TextField(blank=True)
-    startTime = models.DateTimeField(blank=False)
-    endTime = models.DateTimeField(blank=False)
+    date = models.DateField(blank=False)
+    startTime = models.TimeField(blank=False)
+    endTime = models.TimeField(blank=False)
     repeat = models.CharField(max_length=9, null=True, blank=True, choices=REPEAT_CHOICES)
     endRepeat = models.DateField(verbose_name='End Repeat',null=True, blank=True)
     staffSlots = models.IntegerField(blank=False)
@@ -61,5 +62,9 @@ class BaseShift(models.Model):
 
     def get_absolute_url(self):
         return reverse('base-shift-detail', kwargs={'slug': self.slug})
+
+class ShiftInstance(models.Model):
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    baseShift = models.ForeignKey(BaseShift, on_delete=models.CASCADE)
 
 
