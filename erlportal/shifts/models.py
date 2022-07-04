@@ -63,8 +63,8 @@ class BaseShift(models.Model):
     def get_absolute_url(self):
         return reverse('base-shift-detail', kwargs={'slug': self.slug})
 
-class ShiftInstance(models.Model):
-    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    baseShift = models.ForeignKey(BaseShift, on_delete=models.CASCADE)
+# class ShiftInstance(models.Model):
+#     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     baseShift = models.ForeignKey(BaseShift, on_delete=models.CASCADE)
 
 
