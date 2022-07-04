@@ -66,8 +66,17 @@ class BaseShift(models.Model):
     def get_absolute_url(self):
         return reverse('base-shift-detail', kwargs={'slug': self.slug})
 
-# class ShiftInstance(models.Model):
-#     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     baseShift = models.ForeignKey(BaseShift, on_delete=models.CASCADE)
-
+class ShiftInstance(models.Model):
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    baseShift = models.ForeignKey(BaseShift, on_delete=models.CASCADE)
+    date = models.DateField()
+    startTime = models.TimeField(blank=True)
+    endTime = models.TimeField(blank=True)
+    name = models.CharField(max_length=25, blank=True)
+    description = models.TextField(blank=True)
+    staffSlots = models.IntegerField(blank=True)
+    volSlots = models.IntegerField(blank=True)
+    minSlots = models.IntegerField(verbose_name='Minimum Staff/volunteers', blank=True)
+    staff = models.ManyToManyField(ErlUser, related_name='shift_staff', blank=True)
+    vols = models.ManyToManyField(ErlUser, related_name='shift_vols', blank=True)
 
