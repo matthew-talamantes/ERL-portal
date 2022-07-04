@@ -6,6 +6,7 @@
         <h1>{{ object.name }}</h1>
         <h5>Created By: {{ object.createdBy }} | Created On: {{ object.dateCreated|date:"M d Y" }}</h5>
         <p>{{ object.description }}</p>
+        <h3>Start Date: {{ object.date }}</h3>
         <h3>{{ object.repeat }}</h3>
         <h3>Shift Ends: {{ object.endRepeat|date:"M d Y" }}</h3>
         <h3>{{ object.startTime|date:"g:iA" }} - {{ object.endTime|date:"g:iA" }}</h3>

@@ -51,6 +51,9 @@ class BaseShift(models.Model):
         if self.endTime <= self.startTime:
             raise ValidationError(_('Must set an end time that is after the start time.'))
 
+        if self.date < timezone.now().date():
+            raise ValidationError(_('Must set a date that is equal to or after today\'s date.'))
+
         if (int(self.staffSlots) + int(self.volSlots)) < int(self.minSlots):
             slotDiff = self.minSlots - (self.staffSlots + self.volSlots)
             self.volSlots += slotDiff
