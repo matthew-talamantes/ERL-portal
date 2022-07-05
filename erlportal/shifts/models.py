@@ -83,18 +83,5 @@ class ShiftInstance(models.Model):
     def __str__(self):
         return f'Shift Instance: {self.name}'
 
-    def save(self, *args, **kwargs):
-        defaultStaff = self.baseShift.defaultStaff.related.all()
-        defaultVols = self.baseShift.defaultVols.related.all()
-        self.name = self.baseShift.name
-        self.description = self.baseShift.description
-        self.startTime = self.baseShfit.startTime
-        self.endTime = self.baseShift.endTime
-        self.staffSlots = self.baseShift.staffSlots
-        self.volSlots = self.baseShift.volSlots
-        self.staff.add(defaultStaff)
-        self.vols.add(defaultVols)
-        super().save(*args, **kwargs)
-
     def get_absolute_url(self):
         return reverse('shift-instance-detail', kwargs={'uid': self.uid})

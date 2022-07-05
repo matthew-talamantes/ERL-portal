@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
@@ -10,7 +10,7 @@ from django.views.generic import (
 )
 from django.forms import TextInput
 
-from .models import BaseShift
+from .models import BaseShift, ShiftInstance
 
 # Create your views here.
 class BaseShiftListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -80,6 +80,55 @@ class BaseShiftUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class BaseShiftDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = BaseShift
+    success_url = '/'
+
+    def test_func(self):
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+            return True
+        else:
+            return False
+
+class ShiftInstanceListView(LoginRequiredMixin, ListView):
+    model = ShiftInstance
+    context_object_name = 'shifts'
+    ordering = ['date', 'startTime']
+    paginate_by = 25
+
+class ShiftInstanceCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = ShiftInstance
+    fields = ['name', 'description', 'date', 'startTime', 'endTime', 'staffSlots', 'volSlots', 'minSlots', 'staff', 'vols']
+
+    def get_initial(self):
+        baseShift = get_object_or_404(BaseShift, slug=self.kwargs.get('slug'))
+        defaultStaff = baseShift.defaultStaff.related.all()
+        defaultVols = baseShift.defaultVols.related.all()
+        initialDict = {'baseShift': baseShift, 'staff': defaultStaff, 'vols': defaultVols, 'name': baseShift.name, 'description': baseShift.description, 'startTime': baseShift.startTime, 'endTime': baseShift.endTime, 'staffSlots': baseShift.staffSlots, 'volSlots': baseShift.volSlots, 'minSlots': baseShift.minSlots}
+        return initialDict
+
+    def test_func(self):
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+            return True
+        else:
+            return False
+
+class ShiftInstanceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ShiftInstance
+    fields = ['name', 'description', 'date', 'startTime', 'endTime', 'staffSlots', 'volSlots', 'minSlots', 'staff', 'vols']
+
+    def test_func(self):
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+            return True
+        else:
+            return False
+
+class ShiftInstanceDetailView(LoginRequiredMixin, DetailView):
+    model = ShiftInstance
+
+class ShiftInstanceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = ShiftInstance
     success_url = '/'
 
     def test_func(self):
