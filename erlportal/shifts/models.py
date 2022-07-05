@@ -84,4 +84,4 @@ class ShiftInstance(models.Model):
         return f'Shift Instance: {self.name}'
 
     def get_absolute_url(self):
-        return reverse('shift-instance-detail', kwargs={'uid': self.uid})
+        return reverse('shift-instance-detail', kwargs={'base_slug': self.baseShift.slug, 'uid': self.uid})

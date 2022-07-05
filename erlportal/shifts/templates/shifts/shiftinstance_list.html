@@ -5,7 +5,7 @@
     <section>
         {% for item in shifts %}
         <article>
-            <a href="{% url 'shift-instance-detail' slug=item.baseShift.slug uid=item.uid %}">
+            <a href="{% url 'shift-instance-detail' base_slug=item.baseShift.slug uid=item.uid %}">
                 <h2>{{ item.name }}</h2>
             </a>
         </article>
