@@ -167,3 +167,15 @@ class ShiftInstanceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteVie
             return True
         else:
             return False
+
+class BaseShiftChildrenView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = ShiftInstance
+    paginate_by = 25
+    context_object_name = 'shifts'
+    template_name = 'shifts/children_shifts.html'
+
+    def get_queryset(self):
+        baseShift = get_object_or_404(BaseShift, slug=self.kwargs.get('slug'))
+        return ShiftInstance.objects.filter(baseShift=baseShift).order_by('-startTime')
+
+
