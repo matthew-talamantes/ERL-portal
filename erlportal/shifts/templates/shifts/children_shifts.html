@@ -5,7 +5,7 @@
     <section>
         {% for item in shifts %}
         <article>
-            <a href="{% url 'base-instance-detail' base_slug=item.baseShift.slug uid=item.uid %}">
+            <a href="{% url 'shift-instance-detail' base_slug=item.baseShift.slug uid=item.uid %}">
                 <h2>{{ item.baseShift.name }}</h2>
                 <h3>{{ item.date|date:"F d, Y" }}</h3>
                 <h3>{{ item.startTime|date:"g:iA" }} - {{ item.endTime|date:"g:iA" }}</h3>

@@ -178,4 +178,11 @@ class BaseShiftChildrenView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         baseShift = get_object_or_404(BaseShift, slug=self.kwargs.get('slug'))
         return ShiftInstance.objects.filter(baseShift=baseShift).order_by('-startTime')
 
+    def test_func(self):
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+            return True
+        else:
+            return False
+
 
