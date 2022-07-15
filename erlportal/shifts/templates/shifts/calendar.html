@@ -1,0 +1,41 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% block headinfo %}
+<link rel="stylesheet" type="text/css" href="{% static 'events/calendar.css' %}" />
+{% endblock headinfo %}
+{% block content %}
+<h1>Calendar</h1>
+<a href="" id="btn-prev-month">
+    < </a>
+        <h2>{{ monthName }}, {{ year }}</h2>
+        <a href="" id="btn-next-month">></a>
+        <table id="calendar">
+            <thead class="day-names">
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+
+        <section>
+            {% for event in events %}
+            <article id="{{ event.uid }}">
+                <a href="{% url 'shift-instance-detail' base_slug=event.baseShift.slug uid=event.uid %}">
+                    <h2>{{ event.name }}</h2>
+                </a>
+                <h3>{{ event.date|date:"F j, Y" }}</h3>
+                <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
+                <p>{{ event.description }}</p>
+            </article>
+            {% endfor %}
+        </section>
+        {{ calYear|json_script:"year" }}
+        {{ calMonth|json_script:"month" }}
+        {{ eventsJson|json_script:"eventsJson" }}
+        <script type="text/javascript" src="{% static 'shifts/calendar.js' %}"></script>
+        {% endblock content %}

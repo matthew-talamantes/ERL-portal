@@ -12,9 +12,11 @@ from .views import (
     ShiftInstanceUpdateView,
     ShiftInstanceDeleteView,
     BaseShiftChildrenView,
+    CalendarView,
 )
 
 urlpatterns = [
+    path('calendar/<int:year>/<int:month>/', CalendarView.as_view(), name='shifts-calendar'),
     path('base/shifts/', BaseShiftListView.as_view(), name='base-shift-list'),
     path('base/shift/new/', BaseShiftCreateView.as_view(), name='base-shift-create'),
     path('base/shift/<slug:slug>/', BaseShiftDetailView.as_view(), name='base-shift-detail'),

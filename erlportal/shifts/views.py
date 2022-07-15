@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.utils import timezone
+from django.db.models import Q
+from django.views.generic.base import TemplateView
 from django.views.generic import (
     DetailView,
     CreateView,
@@ -9,6 +12,9 @@ from django.views.generic import (
     ListView,
 )
 from django.forms import HiddenInput, TextInput
+
+import datetime
+import calendar
 
 from .models import BaseShift, ShiftInstance
 
@@ -184,5 +190,30 @@ class BaseShiftChildrenView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             return True
         else:
             return False
+
+class CalendarView(TemplateView):
+    template_name = 'shifts/calendar.html'
+
+    def get_context_data(self, **kwargs):
+        months = ('January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')
+        user = self.request.user
+        context = super().get_context_data(**kwargs)
+        year = int(self.kwargs.get('year'))
+        month = int(self.kwargs.get('month'))
+        daysInMonth = calendar.monthrange(year, month)[1]
+        monthStart = timezone.make_aware(datetime.datetime(year, month, 1))
+        monthEnd = timezone.make_aware(datetime.datetime(year, month, daysInMonth))
+        query = ShiftInstance.objects.filter(Q(date__gte=monthStart) & Q(date__lte=monthEnd))
+        eventsJson = []
+        for item in query:
+            itemDict = {'title': item.name, 'slug': item.baseShift.slug, 'startTime': item.startTime, 'endTime': item.endTime, 'date': item.date, 'uid': item.uid}
+            eventsJson.append(itemDict)
+
+        context['calYear'] = year
+        context['calMonth'] = month
+        context['monthName'] = months[month - 1]
+        context['events'] = query
+        context['eventsJson'] = eventsJson
+        return context
 
 
