@@ -44,7 +44,7 @@ class BaseShiftDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 class BaseShiftCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = BaseShift
-    fields = ['name', 'description', 'date', 'startTime', 'endTime', 'repeat', 'endRepeat', 'minSlots', 'staffSlots', 'volSlots', 'defaultStaff', 'defaultVols']
+    fields = ['name', 'description', 'date', 'startTime', 'endTime', 'repeat', 'endRepeat', 'minSlots', 'slots', 'staffSlots', 'volSlots', 'defaultStaff', 'defaultVols']
 
     def get_form(self):
         form = super().get_form()
@@ -67,7 +67,7 @@ class BaseShiftCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 class BaseShiftUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = BaseShift
-    fields = ['name', 'description', 'date', 'startTime', 'endTime', 'repeat', 'endRepeat', 'minSlots', 'staffSlots', 'volSlots', 'defaultStaff', 'defaultVols']
+    fields = ['name', 'description', 'date', 'startTime', 'endTime', 'repeat', 'endRepeat', 'minSlots', 'slots', 'staffSlots', 'volSlots', 'defaultStaff', 'defaultVols']
 
     def get_form(self):
         form = super().get_form()
@@ -103,13 +103,13 @@ class ShiftInstanceListView(LoginRequiredMixin, ListView):
 
 class ShiftInstanceCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = ShiftInstance
-    fields = ['name', 'baseShift','description', 'date', 'startTime', 'endTime', 'staffSlots', 'volSlots', 'minSlots', 'staff', 'vols']
+    fields = ['name', 'baseShift','description', 'date', 'startTime', 'endTime', 'staffSlots', 'volSlots', 'minSlots', 'slots', 'staff', 'vols']
 
     def get_initial(self):
         baseShift = get_object_or_404(BaseShift, slug=self.kwargs.get('slug'))
         defaultStaff = baseShift.defaultStaff.all()
         defaultVols = baseShift.defaultVols.all()
-        initialDict = {'baseShift': baseShift, 'staff': defaultStaff, 'vols': defaultVols, 'name': baseShift.name, 'description': baseShift.description, 'startTime': baseShift.startTime, 'endTime': baseShift.endTime, 'staffSlots': baseShift.staffSlots, 'volSlots': baseShift.volSlots, 'minSlots': baseShift.minSlots, 'date': baseShift.date}
+        initialDict = {'baseShift': baseShift, 'staff': defaultStaff, 'vols': defaultVols, 'name': baseShift.name, 'description': baseShift.description, 'startTime': baseShift.startTime, 'endTime': baseShift.endTime, 'staffSlots': baseShift.staffSlots, 'volSlots': baseShift.volSlots, 'minSlots': baseShift.minSlots, 'slots': baseShift.slots, 'date': baseShift.date}
         return initialDict
 
     def get_form(self):
@@ -129,7 +129,7 @@ class ShiftInstanceCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVie
 
 class ShiftInstanceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = ShiftInstance
-    fields = ['name', 'description', 'date', 'startTime', 'endTime', 'staffSlots', 'volSlots', 'minSlots', 'staff', 'vols']
+    fields = ['name', 'description', 'date', 'startTime', 'endTime', 'staffSlots', 'volSlots', 'minSlots', 'slots', 'staff', 'vols']
     
     def get_object(self, queryset=None):
         uid = self.kwargs['uid']

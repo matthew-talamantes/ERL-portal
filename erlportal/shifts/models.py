@@ -40,6 +40,7 @@ class BaseShift(models.Model):
     staffSlots = models.IntegerField(blank=False)
     volSlots = models.IntegerField(blank=False)
     minSlots = models.IntegerField(verbose_name='Minimum Staff/volunteers', blank=False)
+    slots = models.IntegerField(verbose_name='Ideal Staff/Volunteers', blank=False)
     defaultStaff = models.ManyToManyField(ErlUser, related_name='default_staff', blank=True)
     defaultVols = models.ManyToManyField(ErlUser, related_name='default_vols', blank=True)
     slug = models.SlugField(blank=True, unique=True)
@@ -54,8 +55,11 @@ class BaseShift(models.Model):
         if self.date < timezone.now().date():
             raise ValidationError(_('Must set a date that is equal to or after today\'s date.'))
 
-        if (int(self.staffSlots) + int(self.volSlots)) < int(self.minSlots):
-            slotDiff = self.minSlots - (self.staffSlots + self.volSlots)
+        if int(self.slots) < int(self.minSlots):
+            self.slots = self.minSlots
+
+        if (int(self.staffSlots) + int(self.volSlots)) < int(self.slots):
+            slotDiff = self.slots - (self.staffSlots + self.volSlots)
             self.volSlots += slotDiff
     
     def save(self, *args, **kwargs):
@@ -77,6 +81,7 @@ class ShiftInstance(models.Model):
     staffSlots = models.IntegerField(blank=True)
     volSlots = models.IntegerField(blank=True)
     minSlots = models.IntegerField(verbose_name='Minimum Staff/volunteers', blank=True)
+    slots = models.IntegerField(verbose_name='Ideal Staff/Volunteers', blank=False)
     staff = models.ManyToManyField(ErlUser, related_name='shift_staff', blank=True)
     vols = models.ManyToManyField(ErlUser, related_name='shift_vols', blank=True)
 
