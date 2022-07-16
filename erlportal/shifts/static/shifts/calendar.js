@@ -1,3 +1,18 @@
+const getEventStyle = (event) => {
+    const underStaffed = 'red';
+    const minStaffed = 'yellow';
+    const fullStaffed = 'greed';
+    if (event.staffNum < event.minSlots) {
+        return ` style="border-left: ${underStaffed} solid 5px;"`;
+    } else if (event.staffNum < event.slots) {
+        return ` style="border-left: ${minStaffed} solid 5px;"`;
+    } else if (event.staffNum >= event.slots) {
+        return ` style="border-left: ${fullStaffed} solid 5px;"`;
+    } else {
+        return '';
+    }
+};
+
 const buildCalDay = (dayNum, events, year, month, today) => {
     const cellDay = new Date(year, month, dayNum);
     if (today.toDateString() === cellDay.toDateString()) {
@@ -8,7 +23,7 @@ const buildCalDay = (dayNum, events, year, month, today) => {
     if (events.length > 0) {
         for ( let i = 0; i < events.length; i++) {
             let gridPos = i + 1;
-            htmlOutput += `<div class='day-event event-${gridPos}'><a class='event-link' href="#${events[i].uid}"><h4>${events[i].title}</h4></div>`
+            htmlOutput += `<div class='day-event event-${gridPos}'${getEventStyle(events[i])}><a class='event-link' href="#${events[i].uid}"><h4>${events[i].title}</h4></div>`
         }
     }
     htmlOutput += '</div></td>';
@@ -130,6 +145,9 @@ const paintScreen = () => {
         'date': new Date(dateArray[0], dateArray[1], dateArray[2]),
         'startTime': new Date(dateArray[0], dateArray[1], dateArray[2], startTimeArray[0], startTimeArray[1], startTimeArray[2]),
         'endTime': new Date(dateArray[0], dateArray[1], dateArray[2], endTimeArray[0], endTimeArray[1], endTimeArray[2]),
+        'minSlots': event.minSlots,
+        'slots': event.slots,
+        'staffNum': event.staffNum
     };
     });
     buildCalendar(month, year, events);

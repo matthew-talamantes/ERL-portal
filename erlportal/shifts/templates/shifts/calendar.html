@@ -30,6 +30,8 @@
                 </a>
                 <h3>{{ event.date|date:"F j, Y" }}</h3>
                 <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
+                <h4>Minimum Staffing Needed: {{ event.minSlots }}</h4>
+                <h4>{{ event.vols.all.count|add:event.staff.all.count }} out of {{ event.slots }} slots filled</h4>
                 <p>{{ event.description }}</p>
             </article>
             {% endfor %}
