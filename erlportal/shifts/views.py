@@ -205,16 +205,19 @@ class CalendarView(TemplateView):
         monthEnd = timezone.make_aware(datetime.datetime(year, month, daysInMonth))
         query = ShiftInstance.objects.filter(Q(date__gte=monthStart) & Q(date__lte=monthEnd))
         eventsJson = []
+        staffingDict = {}
         for item in query:
             staffing = item.staff.all().count() + item.vols.all().count()
             itemDict = {'title': item.name, 'slug': item.baseShift.slug, 'startTime': item.startTime, 'endTime': item.endTime, 'date': item.date, 'uid': item.uid, 'minSlots': item.minSlots, 'slots': item.slots, 'staffNum': staffing}
             eventsJson.append(itemDict)
+            staffingDict[item.uid] = staffing
 
         context['calYear'] = year
         context['calMonth'] = month
         context['monthName'] = months[month - 1]
         context['events'] = query
         context['eventsJson'] = eventsJson
+        context['staffing'] = staffingDict
         return context
 
 
