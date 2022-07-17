@@ -29,7 +29,9 @@
                 {% now "Y" as year %}
                 {% now "n" as month %}
                 <li class="nav-item"><a class="nav-link"
-                        href="{% url 'events-calendar' year=year  month=month%}">Events</a></li>
+                        href="{% url 'events-calendar' year=year  month=month %}">Events</a></li>
+                <li class="nav-item"><a class="nav-link"
+                        href="{% url 'shifts-calendar' year=year month=month %}">Shifts</a></li>
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle btn btn-primary" href="#" id="navbarDropdown" role="button"
