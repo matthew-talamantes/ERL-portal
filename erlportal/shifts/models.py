@@ -49,6 +49,11 @@ class BaseShift(models.Model):
         return self.name
 
     def clean(self):
+        weekdays = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
+        if self.repeat and self.repeat != 'everyday':
+            if self.date.weekday() != weekdays.index(self.repeat):
+                raise ValidationError(_('You must set the first date to be on the same day of the week that it repeats on.'))
+
         if self.endTime <= self.startTime:
             raise ValidationError(_('Must set an end time that is after the start time.'))
 
