@@ -23,16 +23,16 @@
             <tbody id="calendar-body"></tbody>
         </table>
 
-        <section>
+        <section id="shifts-list">
             {% for event in events %}
             {% with uid=event.uid %}
-            <article id="{{ event.uid }}" {% if staffing|key_lookup:uid < event.minSlots %}
-             class="under-staffed" 
+            <article id="{{ event.uid }}" class="staffing {% if staffing|key_lookup:uid < event.minSlots %}
+             under-staffed 
              {% elif staffing|key_lookup:uid < event.slots %}
-             class="min-staffed"
+             min-staffed
              {% elif staffing|key_lookup:uid >= event.slots %}
-             class="full-staffed"
-            {% endif %}>
+             full-staffed
+            {% endif %}">
                 <a href="{% url 'shift-instance-detail' base_slug=event.baseShift.slug uid=event.uid %}">
                     <h2>{{ event.name }}</h2>
                 </a>

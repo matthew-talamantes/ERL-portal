@@ -1,0 +1,16 @@
+.staffing {
+  border: solid 5px;
+}
+
+.under-staffed {
+  border-color: red;
+}
+
+.min-staffed {
+  border-color: yellow;
+}
+
+.full-staffed {
+  border-color: green;
+}
+/*# sourceMappingURL=styles.css.map */
