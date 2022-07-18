@@ -17,6 +17,7 @@ import datetime
 import calendar
 
 from .models import BaseShift, ShiftInstance
+from .forms import VolShiftSignupForm
 
 # Create your views here.
 class BaseShiftListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -220,4 +221,47 @@ class CalendarView(TemplateView):
         context['staffing'] = staffingDict
         return context
 
+class VolShiftSignupView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ShiftInstance
+    form_class = VolShiftSignupForm
+    template_name = 'shifts/vol_shift_signup.html'
 
+    def get_object(self, queryset=None):
+        uid = self.kwargs['uid']
+        shift = get_object_or_404(ShiftInstance, uid=uid)
+        return shift
+
+    def form_valid(self, form):
+        shift = self.get_object()
+        shift.vols.add(self.request.user)
+        return super().form_valid(form)
+
+    def test_func(self):
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists() or user.groups.filter(name='Volunteer'):
+            return True
+        else:
+            return False
+
+
+class VolShiftUnSignupView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ShiftInstance
+    form_class = VolShiftSignupForm
+    template_name = 'shifts/vol_shift_unsignup.html'
+
+    def get_object(self, queryset=None):
+        uid = self.kwargs['uid']
+        shift = get_object_or_404(ShiftInstance, uid=uid)
+        return shift
+
+    def form_valid(self, form):
+        shift = self.get_object()
+        shift.vols.remove(self.request.user)
+        return super().form_valid(form)
+
+    def test_func(self):
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists() or user.groups.filter(name='Volunteer'):
+            return True
+        else:
+            return False

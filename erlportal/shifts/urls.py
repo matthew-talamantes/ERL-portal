@@ -13,6 +13,8 @@ from .views import (
     ShiftInstanceDeleteView,
     BaseShiftChildrenView,
     CalendarView,
+    VolShiftSignupView,
+    VolShiftUnSignupView
 )
 
 urlpatterns = [
@@ -27,5 +29,7 @@ urlpatterns = [
     path('base/shift/<slug:base_slug>/shift/<uuid:uid>/', ShiftInstanceDetailView.as_view(), name='shift-instance-detail'),
     path('base/shift/<slug:base_slug>/shift/<uuid:uid>/update/', ShiftInstanceUpdateView.as_view(), name='shift-instance-update'),
     path('base/shift/<slug:base_slug>/shift/<uuid:uid>/delete/', ShiftInstanceDeleteView.as_view(), name='shift-instance-delete'),
+    path('base/shift/<slug:base_slug>/shift/<uuid:uid>/vol/signup/', VolShiftSignupView.as_view(), name='vol-shift-signup'),
+    path('base/shift/<slug:base_slug>/shift/<uuid:uid>/vol/unsignup/', VolShiftUnSignupView.as_view(), name='vol-shift-unsignup'),
     path('', ShiftInstanceListView.as_view(), name='shift-instance-list'),
 ]
