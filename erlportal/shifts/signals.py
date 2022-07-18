@@ -39,7 +39,7 @@ def create_instance_shifts(sender, instance, created, **kwargs):
                 transaction.set_autocommit(True)
         
         else:
-            shift = ShiftInstance.objects.create(baseShift=instance, date=shiftDate, startTime=instance.starTime, endTime=instance.endTime, name=instance.name, description=instance.description, staffSlots=instance.staffSlots, volSlots=instance.volSlots, minSlots=instance.minSlots, slots=instance.slots)
+            shift = ShiftInstance.objects.create(baseShift=instance, date=instance.date, startTime=instance.startTime, endTime=instance.endTime, name=instance.name, description=instance.description, staffSlots=instance.staffSlots, volSlots=instance.volSlots, minSlots=instance.minSlots, slots=instance.slots)
             shift.save()
 
 @receiver(m2m_changed, sender=BaseShift.defaultStaff.through)
