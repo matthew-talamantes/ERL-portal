@@ -1,16 +1,20 @@
 .staffing {
   border: solid 5px;
+  border-radius: 15px;
 }
 
 .under-staffed {
   border-color: red;
+  background-color: rgba(255, 0, 0, 0.15);
 }
 
 .min-staffed {
-  border-color: yellow;
+  border-color: #ffe300;
+  background-color: rgba(255, 255, 0, 0.15);
 }
 
 .full-staffed {
   border-color: green;
+  background-color: rgba(0, 128, 0, 0.15);
 }
 /*# sourceMappingURL=styles.css.map */

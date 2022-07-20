@@ -5,11 +5,14 @@
 <link rel="stylesheet" type="text/css" href="{% static 'events/calendar.css' %}" />
 {% endblock headinfo %}
 {% block content %}
-<h1>Calendar</h1>
-<a href="" id="btn-prev-month">
-    < </a>
+<div class="container-xl">
+    <h1>Shifts</h1>
+    <div class="cal-controls">
+        <a href="" id="btn-prev-month"><i class="fa-solid fa-chevron-left"></i></a>
         <h2>{{ monthName }}, {{ year }}</h2>
-        <a href="" id="btn-next-month">></a>
+        <a href="" id="btn-next-month"><i class="fa-solid fa-chevron-right"></i></a>
+    </div>
+    <div class="cal-wrapper">
         <table id="calendar">
             <thead class="day-names">
                 <th>Sunday</th>
@@ -22,31 +25,33 @@
             </thead>
             <tbody id="calendar-body"></tbody>
         </table>
+    </div>
 
-        <section id="shifts-list">
-            {% for event in events %}
-            {% with uid=event.uid %}
-            <article id="{{ event.uid }}" class="staffing {% if staffing|key_lookup:uid < event.minSlots %}
-             under-staffed 
-             {% elif staffing|key_lookup:uid < event.slots %}
-             min-staffed
-             {% elif staffing|key_lookup:uid >= event.slots %}
-             full-staffed
-            {% endif %}">
-                <a href="{% url 'shift-instance-detail' base_slug=event.baseShift.slug uid=event.uid %}">
-                    <h2>{{ event.name }}</h2>
-                </a>
-                <h3>{{ event.date|date:"F j, Y" }}</h3>
-                <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
-                <h4>Minimum Staffing Needed: {{ event.minSlots }}</h4>
-                <h4>{{ event.vols.all.count|add:event.staff.all.count }} out of {{ event.slots }} slots filled</h4>
-                <p>{{ event.description }}</p>
-            </article>
-            {% endwith %}
-            {% endfor %}
-        </section>
-        {{ calYear|json_script:"year" }}
-        {{ calMonth|json_script:"month" }}
-        {{ eventsJson|json_script:"eventsJson" }}
-        <script type="text/javascript" src="{% static 'shifts/calendar.js' %}"></script>
-        {% endblock content %}
+    <section id="shifts-list" class="mt-4">
+        {% for event in events %}
+        {% with uid=event.uid %}
+        <article id="{{ event.uid }}" class="staffing {% if staffing|key_lookup:uid < event.minSlots %}
+                under-staffed 
+                {% elif staffing|key_lookup:uid < event.slots %}
+                min-staffed
+                {% elif staffing|key_lookup:uid >= event.slots %}
+                full-staffed
+                {% endif %} mb-2">
+            <a href="{% url 'shift-instance-detail' base_slug=event.baseShift.slug uid=event.uid %}">
+                <h2>{{ event.name }}</h2>
+            </a>
+            <h3>{{ event.date|date:"F j, Y" }}</h3>
+            <h4>{{ event.startTime }} - {{ event.endTime }}</h4>
+            <h4>Minimum Staffing Needed: {{ event.minSlots }}</h4>
+            <h4>{{ event.vols.all.count|add:event.staff.all.count }} out of {{ event.slots }} slots filled</h4>
+            <p>{{ event.description }}</p>
+        </article>
+        {% endwith %}
+        {% endfor %}
+    </section>
+</div>
+{{ calYear|json_script:"year" }}
+{{ calMonth|json_script:"month" }}
+{{ eventsJson|json_script:"eventsJson" }}
+<script type="text/javascript" src="{% static 'shifts/calendar.js' %}"></script>
+{% endblock content %}

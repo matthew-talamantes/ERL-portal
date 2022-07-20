@@ -1,21 +1,69 @@
+.cal-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+
+    a {
+        display: block;
+        margin: 0 30px;
+
+        i {
+            font-size: 2em;
+        }
+    }
+}
+
+.cal-wrapper {
+    overflow: hidden;
+    border: solid black 2px;
+    border-radius: 15px;
+}
+
 table#calendar {
-    border: 1px black solid;
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: unquote("calc(100% + 2px)");
     table-layout: fixed;
+    box-sizing: content-box;
 
     thead.day-names {
         th {
             text-align: center;
             border: 2px black solid;
+            border-top: none;
+        }
+
+        th:first-child {
+            border-left: none;
+        }
+
+        th:last-child {
+            border-right: none;
         }
     }
 
     tbody#calendar-body {
+        tr:last-child {
+            td {
+                border-bottom: none;
+            }
+        }
+
         td {
             height: 10em;
             text-align: left;
             position: relative;
-            border: 1px black solid;
+            border: 2px black solid;
+
+            &:first-child {
+                border-left: transparent;
+            }
+
+            &:last-child {
+                border-right: transparent;
+            }
 
             .today {
                 border: 3px red solid;
