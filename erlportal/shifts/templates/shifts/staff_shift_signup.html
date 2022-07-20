@@ -1,0 +1,18 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<section>
+    <h1>Signup For Shift</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            {{ form|crispy }}
+            <button class="btn btn-info" type="submit">Submit</button>
+        </fieldset>
+    </form>
+</section>
+
+
+{% endblock content %}

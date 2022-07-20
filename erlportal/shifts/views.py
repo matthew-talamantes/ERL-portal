@@ -265,3 +265,47 @@ class VolShiftUnSignupView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         else:
             return False
+
+class StaffShiftSignupView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ShiftInstance
+    form_class = VolShiftSignupForm
+    template_name = 'shifts/staff_shift_signup.html'
+
+    def get_object(self, queryset=None):
+        uid = self.kwargs['uid']
+        shift = get_object_or_404(ShiftInstance, uid=uid)
+        return shift
+
+    def form_valid(self, form):
+        shift = self.get_object()
+        shift.staff.add(self.request.user)
+        return super().form_valid(form)
+
+    def test_func(self):
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+            return True
+        else:
+            return False
+
+class StaffShiftUnSignupView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ShiftInstance
+    form_class = VolShiftSignupForm
+    template_name = 'shifts/staff_shift_unsignup.html'
+
+    def get_object(self, queryset=None):
+        uid = self.kwargs['uid']
+        shift = get_object_or_404(ShiftInstance, uid=uid)
+        return shift
+
+    def form_valid(self, form):
+        shift = self.get_object()
+        shift.staff.remove(self.request.user)
+        return super().form_valid(form)
+
+    def test_func(self):
+        user = self.request.user
+        if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+            return True
+        else:
+            return False
