@@ -1,6 +1,6 @@
 const getEventStyle = (event) => {
     const underStaffed = 'red';
-    const minStaffed = 'yellow';
+    const minStaffed = '#ffe300';
     const fullStaffed = 'green';
     if (event.staffNum < event.minSlots) {
         return ` style="border-left: ${underStaffed} solid 5px;"`;

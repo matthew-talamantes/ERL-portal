@@ -19,12 +19,11 @@
     overflow: hidden;
     border: solid black 2px;
     border-radius: 15px;
+    padding: 0;
 }
 
 table#calendar {
-    margin-left: auto;
-    margin-right: auto;
-    width: unquote("calc(100% + 2px)");
+    width: 100%;
     table-layout: fixed;
     box-sizing: content-box;
 
@@ -79,7 +78,8 @@ table#calendar {
                 row-gap: 2px;
                 padding: 3px;
 
-                h3 {
+                h3.day-num {
+                    margin: 0;
                     grid-column-start: 1;
                     grid-column-end: 2;
                     grid-row-start: 1;
@@ -93,8 +93,9 @@ table#calendar {
             }
 
             .day-event {
-                max-height: 1.5em;
-                padding-left: 3px;
+                padding: 3px;
+                justify-self: start;
+                align-self: start;
             }
 
             .event {

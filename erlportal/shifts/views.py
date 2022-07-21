@@ -204,7 +204,7 @@ class CalendarView(TemplateView):
         daysInMonth = calendar.monthrange(year, month)[1]
         monthStart = timezone.make_aware(datetime.datetime(year, month, 1))
         monthEnd = timezone.make_aware(datetime.datetime(year, month, daysInMonth))
-        query = ShiftInstance.objects.filter(Q(date__gte=monthStart) & Q(date__lte=monthEnd))
+        query = ShiftInstance.objects.filter(Q(date__gte=monthStart) & Q(date__lte=monthEnd)).order_by('date', 'startTime')
         eventsJson = []
         staffingDict = {}
         for item in query:
