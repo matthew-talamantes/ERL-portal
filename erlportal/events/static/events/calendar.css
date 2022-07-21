@@ -102,6 +102,12 @@ table#calendar tbody#calendar-body td div.day-wrapper h3 {
 
 table#calendar tbody#calendar-body td div.day-wrapper h4 {
   font-size: 1em;
+  margin: 0;
+}
+
+table#calendar tbody#calendar-body td .day-event {
+  max-height: 1.5em;
+  padding-left: 3px;
 }
 
 table#calendar tbody#calendar-body td .event-1 {

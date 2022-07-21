@@ -1,3 +1,13 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+a,
+p {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .staffing {
   border: solid 5px;
   border-radius: 15px;
