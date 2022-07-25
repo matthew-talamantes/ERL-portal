@@ -1,16 +1,22 @@
 const getEventStyle = (event) => {
-    const underStaffed = 'red';
-    const minStaffed = '#ffe300';
-    const fullStaffed = 'green';
     if (event.staffNum < event.minSlots) {
-        return ` style="border-left: ${underStaffed} solid 5px;"`;
+        return 'cal-staff cal-staff-under';
     } else if (event.staffNum < event.slots) {
-        return ` style="border-left: ${minStaffed} solid 5px;"`;
+        return 'cal-staff cal-staff-min';
     } else if (event.staffNum >= event.slots) {
-        return ` style="border-left: ${fullStaffed} solid 5px;"`;
+        return 'cal-staff cal-staff-full';
     } else {
         return '';
     }
+};
+
+const getEventTitle = (event) => {
+    const url = `/shifts/base/shift/${event.slug}/shift/${event.uid}/`;
+    return `<a href='${url}'>${event.title}</a>`;
+};
+
+const getEventContent = (event) => {
+    return `<div class='staffing-summary'><h4>Minimum Staffing Needed: ${event.minSlots}</h4><h4>${event.staffNum} of ${event.slots} slots filled</h4></div><div class='date-time'><h3>${event.date.toLocaleDateString('en-us', {weekday:'long', year:'numeric', month: 'long', day:'numeric'})}</h3><h4>${event.startTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})} - ${event.endTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})}</h4></div>`;
 };
 
 const buildCalDay = (dayNum, events, year, month, today) => {
@@ -23,7 +29,7 @@ const buildCalDay = (dayNum, events, year, month, today) => {
     if (events.length > 0) {
         for ( let i = 0; i < events.length; i++) {
             let gridPos = i + 1;
-            htmlOutput += `<div class='day-event event-${gridPos}'${getEventStyle(events[i])}><a class='event-link' href="#${events[i].uid}"><h4>${events[i].title}</h4></div>`
+            htmlOutput += `<div class='day-event event-${gridPos} ${getEventStyle(events[i])}'><a class='event-link' role="button" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${getEventTitle(events[i])}" data-bs-content="${getEventContent(events[i])}" data-bs-html="true"><h4>${events[i].title}</h4></div>`;
         }
     }
     htmlOutput += '</div></td>';
@@ -151,6 +157,8 @@ const paintScreen = () => {
     };
     });
     buildCalendar(month, year, events);
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {sanitize: false, html: true}));
 };
 
 window.addEventListener('load', paintScreen());

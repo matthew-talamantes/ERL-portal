@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="row">
-        <section id="shifts-list" class="mt-4">
+        <section id="shifts-list" class="mt-5">
             {% for event in events %}
             {% with uid=event.uid %}
             <article id="{{ event.uid }}" class="staffing {% if staffing|key_lookup:uid < event.minSlots %}
@@ -46,7 +46,7 @@
                     min-staffed
                     {% elif staffing|key_lookup:uid >= event.slots %}
                     full-staffed
-                    {% endif %} mb-2">
+                    {% endif %} mb-3">
 
                 <div class="shift-details">
                     <div class="staffing-summary">
@@ -80,5 +80,7 @@
 {{ calYear|json_script:"year" }}
 {{ calMonth|json_script:"month" }}
 {{ eventsJson|json_script:"eventsJson" }}
-<script type="text/javascript" src="{% static 'shifts/calendar.js' %}"></script>
 {% endblock content %}
+{% block endbody %}
+<script type="text/javascript" src="{% static 'shifts/calendar.js' %}"></script>
+{% endblock endbody %}

@@ -27,7 +27,7 @@
 .cal-wrapper {
   overflow: hidden;
   border: solid black 2px;
-  border-radius: 15px;
+  border-radius: 0.25rem;
   padding: 0;
 }
 
@@ -112,6 +112,25 @@ table#calendar tbody#calendar-body td .day-event {
   -ms-flex-item-align: start;
       -ms-grid-row-align: start;
       align-self: start;
+}
+
+table#calendar tbody#calendar-body td .cal-staff {
+  border-left: 5px solid;
+}
+
+table#calendar tbody#calendar-body td .cal-staff-under {
+  border-left-color: red;
+  background-color: rgba(255, 0, 0, 0.15);
+}
+
+table#calendar tbody#calendar-body td .cal-staff-min {
+  border-left-color: #ffe300;
+  background-color: rgba(255, 255, 0, 0.15);
+}
+
+table#calendar tbody#calendar-body td .cal-staff-full {
+  border-left-color: green;
+  background-color: rgba(0, 128, 0, 0.15);
 }
 
 table#calendar tbody#calendar-body td .event-1 {

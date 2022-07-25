@@ -18,7 +18,7 @@
 .cal-wrapper {
     overflow: hidden;
     border: solid black 2px;
-    border-radius: 15px;
+    border-radius: 0.25rem;
     padding: 0;
 }
 
@@ -96,6 +96,25 @@ table#calendar {
                 padding: 3px;
                 justify-self: start;
                 align-self: start;
+            }
+
+            .cal-staff {
+                border-left: 5px solid;
+
+                &-under {
+                    border-left-color: red;
+                    background-color: rgba(255, 0, 0, 0.15);
+                }
+
+                &-min {
+                    border-left-color: #ffe300;
+                    background-color: rgba(255, 255, 0, 0.15);
+                }
+
+                &-full {
+                    border-left-color: green;
+                    background-color: rgba(0, 128, 0, 0.15);
+                }
             }
 
             .event {
