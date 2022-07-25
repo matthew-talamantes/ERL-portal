@@ -16,7 +16,7 @@ const getEventTitle = (event) => {
 };
 
 const getEventContent = (event) => {
-    return `<div class='staffing-summary'><h4>Minimum Staffing Needed: ${event.minSlots}</h4><h4>${event.staffNum} of ${event.slots} slots filled</h4></div><div class='date-time'><h3>${event.date.toLocaleDateString('en-us', {weekday:'long', year:'numeric', month: 'long', day:'numeric'})}</h3><h4>${event.startTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})} - ${event.endTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})}</h4></div>`;
+    return `<div class='date-time'><h3>${event.date.toLocaleDateString('en-us', {year:'numeric', month: 'long', day:'numeric'})}</h3><h4>${event.startTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})} - ${event.endTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})}</h4></div><div class='staffing-summary'><h4>Minimum Staffing Needed: ${event.minSlots}</h4><h4>${event.staffNum} of ${event.slots} slots filled</h4></div>`;
 };
 
 const buildCalDay = (dayNum, events, year, month, today) => {
