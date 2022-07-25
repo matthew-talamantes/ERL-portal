@@ -96,10 +96,16 @@ table#calendar {
                 padding: 3px;
                 justify-self: start;
                 align-self: start;
+
+                h4 {
+                    padding: 3px;
+                }
             }
 
             .cal-staff {
-                border-left: 5px solid;
+                border-left: 8px solid;
+                border-top-right-radius: 0.25rem;
+                border-bottom-right-radius: 0.25rem;
 
                 &-under {
                     border-left-color: red;
