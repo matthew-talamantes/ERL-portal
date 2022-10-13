@@ -1,0 +1,16 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<section>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Delete Shift</legend>
+            <h3>Are you sure you want to delete the shift: {{ object.name }}?</h3>
+        </fieldset>
+        <a class="btn btn-outline-secondary"
+            href="{% url 'shift-instance-detail' base_slug=object.baseShift.slug uid=object.uid %}">Cancel</a>
+        <button class="btn btn-outline-danger" type="submit">Delete Shift</button>
+    </form>
+</section>
+{% endblock content %}

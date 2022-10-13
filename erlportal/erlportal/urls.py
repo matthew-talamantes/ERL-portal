@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('pages.urls')),
     # For rest tutorial rewrite for actual release
     path('events/', include('events.urls')),
+    path('shifts/', include('shifts.urls')),
 ]
 
 if settings.DEBUG:

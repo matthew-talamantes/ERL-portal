@@ -1,0 +1,34 @@
+{% extends "pages/base.html" %}
+{% load event_extras %}
+
+{% block content %}
+<section>
+    <article>
+        <h1>{{ object.name }}</h1>
+        <p>{{ object.description }}</p>
+        <h3>{{ object.date }}</h3>
+        <h3>{{ object.startTime|date:"g:iA" }} - {{ object.endTime|date:"g:iA" }}</h3>
+        {% if request.user|has_group:"Staff" or request.user|has_group:"WebAdmin" %}
+        <h4>Min Slots: {{ object.minSlots }}</h4>
+        <h4>Slots: {{ object.slots }}</h4>
+        <h4>Staff Slots: {{ object.staffSlots }}</h4>
+        <h4>Volunteer Slots: {{ object.volSlots }}</h4>
+        <h4>Staff:</h4>
+        <ul>
+            {% for staff in object.staff.all %}
+            <li>{{ staff.username }}</li>
+            {% endfor %}
+        </ul>
+        <h4>Volunteers:</h4>
+        <ul>
+            {% for vol in object.vols.all %}
+            <li>{{ vol.username }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <h4>Volunteer Slots: {{ object.volSlots }}</h4>
+        <h4>Filled Volunteer Slots: {{ object.vols.all.count }}</h4>
+        {% endif %}
+    </article>
+</section>
+{% endblock content %}

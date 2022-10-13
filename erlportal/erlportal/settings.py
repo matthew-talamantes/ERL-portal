@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'useraccount.apps.UseraccountConfig',
     'events.apps.EventsConfig',
+    'shifts.apps.ShiftsConfig',
 ]
 
 MIDDLEWARE = [
@@ -213,8 +214,8 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 SESSION_COOKIE_HTTPONLY = False
 CSRF_COOKIE_HTTPONLY = False
-SESSION_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'Strict'
+CSRF_COOKIE_SAMESITE = 'Strict'
 
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'uuid',
