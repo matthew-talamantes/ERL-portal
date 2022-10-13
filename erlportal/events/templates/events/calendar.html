@@ -1,30 +1,44 @@
 {% extends "pages/base.html" %}
 {% load static %}
+{% load event_extras %}
 {% block headinfo %}
 <link rel="stylesheet" type="text/css" href="{% static 'events/calendar.css' %}" />
 {% endblock headinfo %}
 {% block content %}
-<h1>Calendar</h1>
-<a href="" id="btn-prev-month">
-    < </a>
-        <h2>{{ monthName }}, {{ year }}</h2>
-        <a href="" id="btn-next-month">></a>
-        <table id="calendar">
-            <thead class="day-names">
-                <th>Sunday</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-            </thead>
-            <tbody id="calendar-body"></tbody>
-        </table>
-
-        <section>
+<div class="container-xl">
+    <div class="row mt-4">
+        <div class="page-title">
+            <h1>Events</h1>
+            {% if request.user|has_group:"Staff" or request.user|has_group:"WebAdmin" %}
+            <a class="btn btn-primary" href="{% url 'event-create' %}">Add Event</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="cal-controls">
+            <a href="" id="btn-prev-month"><i class="fa-solid fa-chevron-left"></i></a>
+            <h2>{{ monthName }}, {{ year }}</h2>
+            <a href="" id="btn-next-month"><i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+        <div class="cal-wrapper">
+            <table id="calendar">
+                <thead class="day-names">
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </thead>
+                <tbody id="calendar-body"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <section id="events-list" class="mt-5">
             {% for event in events %}
-            <article id="{{ event.slug }}" style="border: 3px solid {{ event.color }};">
+            <article id="{{ event.slug }}" class="mb-3" style="border: 3px solid {{ event.color }};">
                 <a href="{% url 'event-detail' event.slug %}">
                     <h2>{{ event.title }}</h2>
                 </a>
@@ -33,8 +47,12 @@
             </article>
             {% endfor %}
         </section>
-        {{ calYear|json_script:"year" }}
-        {{ calMonth|json_script:"month" }}
-        {{ eventsJson|json_script:"eventsJson" }}
-        <script type="text/javascript" src="{% static 'events/calendar.js' %}"></script>
-        {% endblock content %}
+    </div>
+</div>
+{{ calYear|json_script:"year" }}
+{{ calMonth|json_script:"month" }}
+{{ eventsJson|json_script:"eventsJson" }}
+{% endblock content %}
+{% block endbody %}
+<script type="text/javascript" src="{% static 'events/calendar.js' %}"></script>
+{% endblock endbody %}

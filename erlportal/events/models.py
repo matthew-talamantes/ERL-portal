@@ -64,7 +64,7 @@ class Event(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('event', kwargs={'slug': self.slug})
+        return reverse('event-detail', kwargs={'slug': self.slug})
 
     class Meta:
         permissions = [

@@ -1,3 +1,12 @@
+const getEventTitle = (event) => {
+    const url = `/events/event/${event.slug}/`;
+    return `<a href='${url}'>${event.title}</a>`;
+};
+
+const getEventContent = (event) => {
+    return `<div class='date-time'><h4>Start: ${event.startTime.toLocaleString('en-us', {year:'numeric', month: 'long', day:'numeric', hour12: true, hour: 'numeric', minute: '2-digit'})}</h4><h4>End: ${event.endTime.toLocaleString('en-us', {year:'numeric', month: 'long', day:'numeric', hour12: true, hour: 'numeric', minute: '2-digit'})}</h4></div><div class='staffing-summary'><p>Description</p></div>`;
+};
+
 const buildCalDay = (dayNum, events, year, month, today) => {
     const cellDay = new Date(year, month, dayNum);
     if (today.toDateString() === cellDay.toDateString()) {
@@ -8,7 +17,7 @@ const buildCalDay = (dayNum, events, year, month, today) => {
     if (events.length > 0) {
         for ( let i = 0; i < events.length; i++) {
             let gridPos = i + 1;
-            htmlOutput += `<div class='day-event event-${gridPos}' style="background-color: ${events[i].color};"><a class='event-link' href="#${events[i].slug}"><h4>${events[i].title}</h4></div>`
+            htmlOutput += `<div class='day-event event-${gridPos}' style="background-color: ${events[i].color};"><a class='event-link' role="button" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${getEventTitle(events[i])}" data-bs-content="${getEventContent(events[i])}" data-bs-html="true"><h4>${events[i].title}</h4></div>`
         }
     }
     htmlOutput += '</div></td>';
@@ -112,6 +121,8 @@ const paintScreen = () => {
     };
     });
     buildCalendar(month, year, events);
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {sanitize: false, html: true}));
 };
 
 window.addEventListener('load', paintScreen());
