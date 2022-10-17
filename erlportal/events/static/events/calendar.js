@@ -1,3 +1,18 @@
+const hexToRgb = (hex) => {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+      return r + r + g + g + b + b;
+    });
+  
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  };
+
 const getEventTitle = (event) => {
     const url = `/events/event/${event.slug}/`;
     return `<a href='${url}'>${event.title}</a>`;
@@ -17,7 +32,8 @@ const buildCalDay = (dayNum, events, year, month, today) => {
     if (events.length > 0) {
         for ( let i = 0; i < events.length; i++) {
             let gridPos = i + 1;
-            htmlOutput += `<div class='day-event event-${gridPos}' style="background-color: ${events[i].color};"><a class='event-link' role="button" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${getEventTitle(events[i])}" data-bs-content="${getEventContent(events[i])}" data-bs-html="true"><h4>${events[i].title}</h4></div>`
+            let rgb = hexToRgb(events[i].color);
+            htmlOutput += `<div class='day-event event-${gridPos}' style="background-color: rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15); border-color: ${events[i].color};"><a class='event-link' role="button" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${getEventTitle(events[i])}" data-bs-content="${getEventContent(events[i])}" data-bs-html="true"><h4>${events[i].title}</h4></div>`
         }
     }
     htmlOutput += '</div></td>';

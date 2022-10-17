@@ -1,25 +1,14 @@
 .cal-controls {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 15px;
 }
-
 .cal-controls a {
   display: block;
   margin: 0 30px;
 }
-
 .cal-controls a i {
   font-size: 2em;
 }
@@ -34,153 +23,102 @@
 table#calendar {
   width: 100%;
   table-layout: fixed;
-  -webkit-box-sizing: content-box;
-          box-sizing: content-box;
+  box-sizing: content-box;
 }
-
 table#calendar thead.day-names th {
   text-align: center;
   border: 2px black solid;
   border-top: none;
 }
-
 table#calendar thead.day-names th:first-child {
   border-left: none;
 }
-
 table#calendar thead.day-names th:last-child {
   border-right: none;
 }
-
 table#calendar tbody#calendar-body tr:last-child td {
   border-bottom: none;
 }
-
 table#calendar tbody#calendar-body td {
   height: 10em;
   text-align: left;
   position: relative;
   border: 2px black solid;
 }
-
 table#calendar tbody#calendar-body td:first-child {
   border-left: transparent;
 }
-
 table#calendar tbody#calendar-body td:last-child {
   border-right: transparent;
 }
-
 table#calendar tbody#calendar-body td .today {
   border: 3px red solid;
 }
-
 table#calendar tbody#calendar-body td div.day-wrapper {
   width: 100%;
   height: 100%;
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[4];
-      grid-template-columns: repeat(4, 1fr);
-  -ms-grid-rows: (1fr)[5];
-      grid-template-rows: repeat(5, 1fr);
-  -webkit-column-gap: 2px;
-          column-gap: 2px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  -moz-column-gap: 2px;
+       column-gap: 2px;
   row-gap: 2px;
   padding: 3px;
 }
-
 table#calendar tbody#calendar-body td div.day-wrapper h3.day-num {
   margin: 0;
-  -ms-grid-column: 1;
-      grid-column-start: 1;
+  grid-column-start: 1;
   grid-column-end: 2;
-  -ms-grid-row: 1;
-      grid-row-start: 1;
+  grid-row-start: 1;
   grid-row-end: 2;
 }
-
 table#calendar tbody#calendar-body td div.day-wrapper h4 {
   font-size: 1em;
   margin: 0;
 }
-
 table#calendar tbody#calendar-body td .day-event {
   padding: 3px;
-  -ms-grid-column-align: start;
-      justify-self: start;
-  -ms-flex-item-align: start;
-      -ms-grid-row-align: start;
-      align-self: start;
+  justify-self: start;
+  align-self: start;
+  border-left: 8px solid;
 }
-
 table#calendar tbody#calendar-body td .day-event h4 {
   padding: 3px;
 }
-
 table#calendar tbody#calendar-body td .cal-staff {
   border-left: 8px solid;
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-
 table#calendar tbody#calendar-body td .cal-staff-under {
   border-left-color: red;
   background-color: rgba(255, 0, 0, 0.15);
 }
-
 table#calendar tbody#calendar-body td .cal-staff-min {
   border-left-color: #ffe300;
   background-color: rgba(255, 255, 0, 0.15);
 }
-
 table#calendar tbody#calendar-body td .cal-staff-full {
   border-left-color: green;
   background-color: rgba(0, 128, 0, 0.15);
 }
-
 table#calendar tbody#calendar-body td .event-1 {
-  -ms-grid-row: 1;
-  -ms-grid-row-span: 1;
-  grid-row: 1 / 2;
-  -ms-grid-column: 2;
-  -ms-grid-column-span: 3;
-  grid-column: 2 / 5;
+  grid-row: 1/2;
+  grid-column: 2/5;
 }
-
 table#calendar tbody#calendar-body td .event-2 {
-  -ms-grid-row: 2;
-  -ms-grid-row-span: 1;
-  grid-row: 2 / 3;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 4;
-  grid-column: 1 / 5;
+  grid-row: 2/3;
+  grid-column: 1/5;
 }
-
 table#calendar tbody#calendar-body td .event-3 {
-  -ms-grid-row: 3;
-  -ms-grid-row-span: 1;
-  grid-row: 3 / 4;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 4;
-  grid-column: 1 / 5;
+  grid-row: 3/4;
+  grid-column: 1/5;
 }
-
 table#calendar tbody#calendar-body td .event-4 {
-  -ms-grid-row: 4;
-  -ms-grid-row-span: 1;
-  grid-row: 4 / 5;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 4;
-  grid-column: 1 / 5;
+  grid-row: 4/5;
+  grid-column: 1/5;
 }
-
 table#calendar tbody#calendar-body td .event-5 {
-  -ms-grid-row: 5;
-  -ms-grid-row-span: 1;
-  grid-row: 5 / 6;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 4;
-  grid-column: 1 / 5;
-}
-/*# sourceMappingURL=calendar.css.map */
+  grid-row: 5/6;
+  grid-column: 1/5;
+}/*# sourceMappingURL=calendar.css.map */

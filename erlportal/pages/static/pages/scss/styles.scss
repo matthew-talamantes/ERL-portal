@@ -35,7 +35,7 @@ p {
     align-items: center;
 }
 
-// Calendar summary cards
+// Shifts Calendar summary cards
 #shifts-list {
     // display: flex;
     // justify-content: space-between;
@@ -71,5 +71,17 @@ p {
                 padding: 0.5em 1em;
             }
         }
+    }
+}
+
+// Events summary cards
+#events-list {
+    .event-listing {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1em;
+        width: 85%;
+        border: solid 5px;
+        border-radius: 0.25rem;
     }
 }
