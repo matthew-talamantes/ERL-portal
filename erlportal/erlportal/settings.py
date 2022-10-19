@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     # 'rest_framework_simplejwt',
     'corsheaders',
     'colorfield',
+    'phonenumber_field',
 
     # Local
     'pages.apps.PagesConfig',

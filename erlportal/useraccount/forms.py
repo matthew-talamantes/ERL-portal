@@ -48,19 +48,29 @@ class ErlSignupForm(SignupForm):
 
     PHONE = 'phone'
     EMAIL = 'email'
-    contactChoices = [(None, ''), (EMAIL, 'E-Mail'), (PHONE, 'Phone')]
+    contactChoices = [(EMAIL, 'E-Mail'), (PHONE, 'Phone')]
 
     def __init__(self, *args, **kwargs):
-
+        if args:
+            data = args[0]
+        else:
+            data = kwargs.get('data', None)
+        if data:
+            data = data.copy()
+            phoneNum = data['phoneNumber']
+            if len(phoneNum) < 12 and phoneNum[0:2] != '+1':
+                phoneNum = '+1' + phoneNum
+                data['phoneNumber'] = phoneNum
+                kwargs['data'] = data
         self.imgFile = kwargs.pop('imgFile')
         super().__init__(*args, **kwargs)
         self.fields['firstName'] = forms.CharField(label="First Name", max_length=25, widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
         self.fields['middleName'] = forms.CharField(label="Middle Name", max_length=25, widget=forms.TextInput(attrs={'placeholder': 'Middle Name'}), required=False)
         self.fields['lastName'] = forms.CharField(label="Last Name", max_length=25, widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
         self.fields['shareName'] = forms.BooleanField(label="Share Name", required=False)
-        self.fields['phoneNumber'] = PhoneNumberField(label='Phone Number', widget=forms.TextInput(attrs={'placeholder': '+17031234567'}))
-        self.fields['contactPreference'] = forms.ChoiceField(label='Contact Preference', choices=self.contactChoices)
-        self.fields['birthDate'] = forms.DateField(label='Birthdate', input_formats=['%m-%d-%Y'], widget=forms.DateInput(attrs={'placeholder': 'MM-DD-YYYY'}))
+        self.fields['phoneNumber'] = PhoneNumberField(label='Phone Number')
+        self.fields['contactPreference'] = forms.ChoiceField(label='Contact Preference', choices=self.contactChoices, widget=forms.RadioSelect())
+        self.fields['birthDate'] = forms.DateField(label='Birthdate', input_formats=['%Y-%m-%d'], widget=forms.DateInput(attrs={'placeholder': 'MM-DD-YYYY', 'type': 'date'}))
         self.fields['image'] = forms.ImageField(label='Profile Image', required=False)
 
     def save(self, request):
