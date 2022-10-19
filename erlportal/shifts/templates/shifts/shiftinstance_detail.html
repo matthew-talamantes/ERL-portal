@@ -6,7 +6,7 @@
     <article>
         <h1>{{ object.name }}</h1>
         <p>{{ object.description }}</p>
-        <h3>{{ object.date }}</h3>
+        <h3>{{ object.date|date:"l, F j, Y" }}</h3>
         <h3>{{ object.startTime|date:"g:iA" }} - {{ object.endTime|date:"g:iA" }}</h3>
         {% if request.user|has_group:"Staff" or request.user|has_group:"WebAdmin" %}
         <h4>Min Slots: {{ object.minSlots }}</h4>
