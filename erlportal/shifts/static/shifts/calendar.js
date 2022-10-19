@@ -16,7 +16,12 @@ const getEventTitle = (event) => {
 };
 
 const getEventContent = (event) => {
-    return `<div class='date-time'><h3>${event.date.toLocaleDateString('en-us', {year:'numeric', month: 'long', day:'numeric'})}</h3><h4>${event.startTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})} - ${event.endTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})}</h4></div><div class='staffing-summary'><h4>Minimum Staffing Needed: ${event.minSlots}</h4><h4>${event.staffNum} of ${event.slots} slots filled</h4></div>`;
+    let content = `<div class='date-time'><h3>${event.date.toLocaleDateString('en-us', {year:'numeric', month: 'long', day:'numeric'})}</h3><h4>${event.startTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})} - ${event.endTime.toLocaleTimeString('en-us', {hour12: true, timeStyle: 'short'})}</h4></div><div class='staffing-summary'><h4>Minimum Staffing Needed: ${event.minSlots}</h4><h4>${event.staffNum} of ${event.slots} slots filled</h4></div>`;
+    if (event.signupUrl) {
+        content += `<div><a class='btn btn-primary' href='${event.signupUrl}'>Sign Up</a></div>`;
+    }
+
+    return content;
 };
 
 const buildCalDay = (dayNum, events, year, month, today) => {
@@ -144,17 +149,18 @@ const paintScreen = () => {
         const dateArray = getDateArray(event.date);
         const startTimeArray = getTimeArray(event.startTime);
         const endTimeArray = getTimeArray(event.endTime);
-    return {
-        'title': event.title,
-        'slug': event.slug,
-        'uid': event.uid,
-        'date': new Date(dateArray[0], dateArray[1], dateArray[2]),
-        'startTime': new Date(dateArray[0], dateArray[1], dateArray[2], startTimeArray[0], startTimeArray[1], startTimeArray[2]),
-        'endTime': new Date(dateArray[0], dateArray[1], dateArray[2], endTimeArray[0], endTimeArray[1], endTimeArray[2]),
-        'minSlots': event.minSlots,
-        'slots': event.slots,
-        'staffNum': event.staffNum
-    };
+        return {
+            'title': event.title,
+            'slug': event.slug,
+            'uid': event.uid,
+            'date': new Date(dateArray[0], dateArray[1], dateArray[2]),
+            'startTime': new Date(dateArray[0], dateArray[1], dateArray[2], startTimeArray[0], startTimeArray[1], startTimeArray[2]),
+            'endTime': new Date(dateArray[0], dateArray[1], dateArray[2], endTimeArray[0], endTimeArray[1], endTimeArray[2]),
+            'minSlots': event.minSlots,
+            'slots': event.slots,
+            'staffNum': event.staffNum,
+            'signupUrl': event.signupUrl
+        };
     });
     buildCalendar(month, year, events);
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');

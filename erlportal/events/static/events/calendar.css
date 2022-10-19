@@ -1,8 +1,17 @@
 .cal-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin-bottom: 15px;
 }
 .cal-controls a {
@@ -23,7 +32,8 @@
 table#calendar {
   width: 100%;
   table-layout: fixed;
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
 }
 table#calendar thead.day-names th {
   text-align: center;
@@ -60,8 +70,9 @@ table#calendar tbody#calendar-body td div.day-wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  -moz-column-gap: 2px;
-       column-gap: 2px;
+  -webkit-column-gap: 2px;
+     -moz-column-gap: 2px;
+          column-gap: 2px;
   row-gap: 2px;
   padding: 3px;
 }
@@ -79,7 +90,8 @@ table#calendar tbody#calendar-body td div.day-wrapper h4 {
 table#calendar tbody#calendar-body td .day-event {
   padding: 3px;
   justify-self: start;
-  align-self: start;
+  -ms-flex-item-align: start;
+      align-self: start;
   border-left: 8px solid;
 }
 table#calendar tbody#calendar-body td .day-event h4 {

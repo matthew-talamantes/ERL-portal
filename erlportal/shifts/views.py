@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils import timezone
+from django.urls import reverse
 from django.db.models import Q
 from django.views.generic.base import TemplateView
 from django.views.generic import (
@@ -210,6 +211,12 @@ class CalendarView(TemplateView):
         for item in query:
             staffing = item.staff.all().count() + item.vols.all().count()
             itemDict = {'title': item.name, 'slug': item.baseShift.slug, 'startTime': item.startTime, 'endTime': item.endTime, 'date': item.date, 'uid': item.uid, 'minSlots': item.minSlots, 'slots': item.slots, 'staffNum': staffing}
+            if user.groups.filter(name='Staff').exists() or user.groups.filter(name='WebAdmin').exists():
+                itemDict['signupUrl'] = reverse('staff-shift-signup', kwargs={'base_slug': item.baseShift.slug, 'uid': item.uid})
+            elif user.groups.filter(name="Volunteer").exists():
+                itemDict['signupUrl'] = reverse('vol-shift-signup', kwargs={'base_slug': item.baseShift.slug, 'uid': item.uid})
+            else: 
+                itemDict['signupUrl'] = ''
             eventsJson.append(itemDict)
             staffingDict[item.uid] = staffing
 
