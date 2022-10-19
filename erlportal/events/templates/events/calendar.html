@@ -37,8 +37,9 @@
     </div>
     <div class="row">
         <section id="events-list" class="mt-5">
-            {% for event in events %}
-            <article id="{{ event.slug }}" class="mb-3 event-listing" style="border-color: {{ event.color }};">
+            {% for event in eventsJson %}
+            <article id="{{ event.slug }}" class="mb-3 event-listing"
+                style="border-color: {{ event.color }}; background-color: {{ event.rgbaColor }};">
                 <a href="{% url 'event-detail' event.slug %}">
                     <h2>{{ event.title }}</h2>
                 </a>

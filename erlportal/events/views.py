@@ -21,6 +21,7 @@ from colorfield.widgets import ColorWidget
 
 from .models import Event
 from .serializers import EventSerializer
+from .utilities import convertHexToRgb
 
 
 # Create your views here.
@@ -120,12 +121,11 @@ class CalendarView(TemplateView):
             query = Event.objects.filter(Q(startTime__gte=monthStart) | Q(endTime__gte=monthStart)).filter(Q(startTime__lte=monthEnd) | Q(endTime__lte=monthEnd)).filter(Q(viewPerms='public'))
         eventsJson = []
         for item in query:
-            itemDict = {'title': item.title, 'slug': item.slug, 'startTime': item.startTime, 'endTime': item.endTime, 'color': item.color}
+            itemDict = {'title': item.title, 'slug': item.slug, 'startTime': item.startTime, 'endTime': item.endTime, 'description': item.description,'color': item.color, 'rgbaColor': convertHexToRgb(item.color, 0.15)}
             eventsJson.append(itemDict)
 
         context['calYear'] = year
         context['calMonth'] = month
         context['monthName'] = months[month - 1]
-        context['events'] = query
         context['eventsJson'] = eventsJson
         return context
