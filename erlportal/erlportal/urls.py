@@ -30,6 +30,7 @@ urlpatterns = [
     # For rest tutorial rewrite for actual release
     path('events/', include('events.urls')),
     path('shifts/', include('shifts.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:

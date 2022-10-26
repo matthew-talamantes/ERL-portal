@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'colorfield',
     'phonenumber_field',
     'ckeditor',
+    'ckeditor_uploader',
 
     # Local
     'pages.apps.PagesConfig',
@@ -221,4 +222,13 @@ CSRF_COOKIE_SAMESITE = 'Strict'
 
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'uuid',
+}
+
+# CKEditor config
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_CONFIGS = {
+    "default": {
+        "removePlugins": "stylesheetparser",
+        "disallowedContent": "script iframe",
+    }
 }
