@@ -1,0 +1,155 @@
+.cal-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+
+    a {
+        display: block;
+        margin: 0 30px;
+
+        i {
+            font-size: 2em;
+        }
+    }
+}
+
+.cal-wrapper {
+    overflow: hidden;
+    border: solid black 2px;
+    border-radius: 0.25rem;
+    padding: 0;
+}
+
+table#calendar {
+    width: 100%;
+    table-layout: fixed;
+    box-sizing: content-box;
+
+    thead.day-names {
+        th {
+            text-align: center;
+            border: 2px black solid;
+            border-top: none;
+        }
+
+        th:first-child {
+            border-left: none;
+        }
+
+        th:last-child {
+            border-right: none;
+        }
+    }
+
+    tbody#calendar-body {
+        tr:last-child {
+            td {
+                border-bottom: none;
+            }
+        }
+
+        td {
+            height: 10em;
+            text-align: left;
+            position: relative;
+            border: 2px black solid;
+
+            &:first-child {
+                border-left: transparent;
+            }
+
+            &:last-child {
+                border-right: transparent;
+            }
+
+            .today {
+                border: 3px red solid;
+            }
+
+            div.day-wrapper {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(5, 1fr);
+                column-gap: 2px;
+                row-gap: 2px;
+                padding: 3px;
+
+                h3.day-num {
+                    margin: 0;
+                    grid-column-start: 1;
+                    grid-column-end: 2;
+                    grid-row-start: 1;
+                    grid-row-end: 2;
+                }
+
+                h4 {
+                    font-size: 1em;
+                    margin: 0;
+                }
+            }
+
+            .day-event {
+                padding: 3px;
+                justify-self: start;
+                align-self: start;
+                border-left: 8px solid;
+
+                h4 {
+                    padding: 3px;
+                }
+            }
+
+            .cal-staff {
+                border-left: 8px solid;
+                border-top-right-radius: 0.25rem;
+                border-bottom-right-radius: 0.25rem;
+
+                &-under {
+                    border-left-color: red;
+                    background-color: rgba(255, 0, 0, 0.15);
+                }
+
+                &-min {
+                    border-left-color: #ffe300;
+                    background-color: rgba(255, 255, 0, 0.15);
+                }
+
+                &-full {
+                    border-left-color: green;
+                    background-color: rgba(0, 128, 0, 0.15);
+                }
+            }
+
+            .event {
+                &-1 {
+                    grid-row: 1 / 2;
+                    grid-column: 2 / 5;
+                }
+
+                &-2 {
+                    grid-row: 2 / 3;
+                    grid-column: 1 / 5;
+                }
+
+                &-3 {
+                    grid-row: 3 / 4;
+                    grid-column: 1 / 5;
+                }
+
+                &-4 {
+                    grid-row: 4 / 5;
+                    grid-column: 1 / 5;
+                }
+
+                &-5 {
+                    grid-row: 5 / 6;
+                    grid-column: 1 / 5;
+                }
+            }
+        }
+    }
+}
