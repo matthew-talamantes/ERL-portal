@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'useraccount.apps.UseraccountConfig',
     'events.apps.EventsConfig',
     'shifts.apps.ShiftsConfig',
+    'announcements.apps.AnnouncementsConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 from ckeditor.fields import RichTextField
 
@@ -14,4 +15,10 @@ class Announcement(models.Model):
     dateCreated = models.DateTimeField(default=timezone.now, editable=False)
     postedBy = models.ForeignKey(ErlUser, on_delete=models.CASCADE)
     viewPerms = models.CharField(verbose_name='Who can see this announcement', max_length=10, choices=Event.VIEW_PERMS, default='volunteers', blank=False, null=False)
+
+    def __str__(self):
+        return f'{self.title}'
+
+    def get_absolute_url(self):
+        return reverse('announcement-detail', kwargs={'pk': self.pk})
 
