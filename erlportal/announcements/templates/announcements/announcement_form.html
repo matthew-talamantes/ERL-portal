@@ -10,6 +10,7 @@
             <form method="POST">
                 {% csrf_token %}
                 <fieldset>
+                    {{ form.media }}
                     {{ form|crispy }}
                     <button class="btn btn-info" type="submit">Submit</button>
                 </fieldset>
