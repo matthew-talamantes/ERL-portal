@@ -1,0 +1,19 @@
+{% extends "pages/base.html" %}
+{% load event_extras %}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <article class="col-md-8">
+            <h1>{{ object.title }}</h1>
+            <h5>Posted On: {{ object.dateCreated|date:"M d Y" }}</h5>
+            <h5>Posted By: {{ object.postedBy }}</h5>
+            {% if request.user|has_group:"Staff" or request.user|has_group:"WebAdmin" %}
+            <h3>Visability:</h3>
+            <h4>{{ object.viewPerms }}</h4>
+            {% endif %}
+            <p>{{ object.description|safe }}</p>
+        </article>
+    </div>
+</section>
+{% endblock content %}

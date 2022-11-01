@@ -1,0 +1,17 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <form class="col-md-4" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Delete Announcement</legend>
+                <h3>Are you sure you want to delete the announcement: {{ object.title }}?</h3>
+            </fieldset>
+            <a class="btn btn-outline-secondary" href="{% url 'announcement-detail' object.pk %}">Cancel</a>
+            <button class="btn btn-outline-danger" type="submit">Delete</button>
+        </form>
+    </div>
+</section>
+{% endblock content %}
