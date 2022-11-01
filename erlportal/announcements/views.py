@@ -70,7 +70,8 @@ class AnnouncementListView(ListView):
     paginate_by = 25
 
     def get_queryset(self):
-        userGroups = self.request.user.groups.all()
+        userGroupsObj = list(self.request.user.groups.all())
+        userGroups = [x.name for x in userGroupsObj]
         # 0=Unauthenticated, 1=Volunteer, 2=Staff/WebAdmin
         viewPerm = 0
         if 'WebAdmin' in userGroups or 'Staff' in userGroups:
@@ -81,7 +82,7 @@ class AnnouncementListView(ListView):
         if viewPerm >= 2:
             results = Announcement.objects.all()
         elif viewPerm == 1:
-            results = Announcement.objects.filter(Q(viewPerms = 'volunteers') | Q(viewPers = 'public'))
+            results = Announcement.objects.filter(Q(viewPerms = 'volunteers') | Q(viewPerms = 'public'))
         else:
             results = Announcement.objects.filter(viewPerms='public')
 
