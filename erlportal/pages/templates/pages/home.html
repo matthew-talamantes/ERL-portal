@@ -2,4 +2,17 @@
 
 {% block content %}
     <h1>Hello World!</h1>
+    <div class="container">
+        <section class="row">
+            <div class="col-md-8">
+                {% for item in announcements %}
+                    <article>
+                        <a href="{% url 'announcement-detail' item.pk %}"><h3>{{ item.title }}</h3></a>
+                        <h5>Posted On: {{ item.dateCreated|date:"M d Y" }}</h5>
+                        <h5>Posted By: {{ item.postedBy }}</h5>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
 {% endblock content %}
