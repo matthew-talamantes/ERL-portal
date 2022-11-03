@@ -5,12 +5,25 @@
     <div class="container">
         <section class="row">
             <div class="col-md-8">
+                <h2>Announcements</h2>
                 {% for item in announcements %}
                     <article>
                         <a href="{% url 'announcement-detail' item.pk %}"><h3>{{ item.title }}</h3></a>
                         <h5>Posted On: {{ item.dateCreated|date:"M d Y" }}</h5>
                         <h5>Posted By: {{ item.postedBy }}</h5>
                     </article>
+                {% endfor %}
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-md-8">
+                <h2>Events</h2>
+                {% for item in events %}
+                <article>
+                    <a href="{% url 'event-detail' item.slug %}"><h3>{{ item.title }}</h3></a>
+                    <h4>Start: {{ item.startTime|date:"g:iA D, M d, Y" }}</h4>
+                    <h4>End: {{ item.endTime|date:"g:iA D, M d, Y" }}</h4>
+                </article>
                 {% endfor %}
             </div>
         </section>

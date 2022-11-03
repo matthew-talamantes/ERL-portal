@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.views.generic import TemplateView
 
 from announcements.models import Announcement
+from events.models import Event
 
 # Create your views here.
 
@@ -27,12 +28,16 @@ class HomePageView(TemplateView):
         viewPerm = get_user_perms(user)
         if viewPerm >= 2:
             announcements = Announcement.objects.all()
+            events = Event.objects.all()
         elif viewPerm == 1:
             announcements = Announcement.objects.filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
+            events = Event.objects.filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
         else:
             announcements = Announcement.objects.filter(viewPerms='public')
+            events = Event.objects.filter(viewPerms='public')
 
         context['announcements'] = announcements[:6]
+        context['events'] = events[:10]
 
         return context
 
