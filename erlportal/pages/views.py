@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import Q, F
 from django.views.generic import TemplateView
+from django.utils import timezone
 
 from announcements.models import Announcement
 from events.models import Event
-
+from shifts.models import ShiftInstance
 # Create your views here.
 
 def get_user_perms(user):
@@ -26,9 +27,11 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
         viewPerm = get_user_perms(user)
+        currentTime = timezone.now()
         if viewPerm >= 2:
             announcements = Announcement.objects.all()
             events = Event.objects.all()
+            openShifts = ShiftInstance.objects.filter(Q(slots__gt=F('minSlots'))) # Just an example
         elif viewPerm == 1:
             announcements = Announcement.objects.filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
             events = Event.objects.filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
@@ -37,7 +40,7 @@ class HomePageView(TemplateView):
             events = Event.objects.filter(viewPerms='public')
 
         context['announcements'] = announcements[:6]
-        context['events'] = events[:10]
+        context['events'] = events.filter(Q(startTime__gte=currentTime) | Q(endTime__gte=currentTime))[:10]
 
         return context
 
