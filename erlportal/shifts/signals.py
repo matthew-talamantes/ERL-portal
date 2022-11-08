@@ -51,6 +51,7 @@ def default_staff_changed(sender, instance, **kwargs):
     relations = []
     for shift in shifts:
         relations.extend([shiftStaffRelation(erluser_id=staff, shiftinstance_id=shift.uid) for staff in staffList])
+        shift.save()
     
     shiftStaffRelation.objects.bulk_create(relations, batch_size=100, ignore_conflicts=True)
 
@@ -63,5 +64,6 @@ def default_vols_changed(sender, instance, **kwargs):
     relations = []
     for shift in shifts:
         relations.extend([shiftVolsRelation(erluser_id=vol, shiftinstance_id=shift.uid) for vol in volsList])
+        shift.save()
 
     shiftVolsRelation.objects.bulk_create(relations, batch_size=100, ignore_conflicts=True)

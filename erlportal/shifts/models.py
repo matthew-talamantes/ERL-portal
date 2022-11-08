@@ -89,9 +89,16 @@ class ShiftInstance(models.Model):
     slots = models.IntegerField(verbose_name='Ideal Staff/Volunteers', blank=False)
     staff = models.ManyToManyField(ErlUser, related_name='shift_staff', blank=True)
     vols = models.ManyToManyField(ErlUser, related_name='shift_vols', blank=True)
+    staffCount = models.IntegerField(default=0, editable=False)
+    volCount = models.IntegerField(default=0, editable=False)
 
     def __str__(self):
         return f'Shift Instance: {self.name}'
+
+    def save(self, *args, **kwargs):
+        self.staffCount = self.staff.count()
+        self.volCount = self.vols.count()
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('shift-instance-detail', kwargs={'base_slug': self.baseShift.slug, 'uid': self.uid})
