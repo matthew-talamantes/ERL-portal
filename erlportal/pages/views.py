@@ -31,16 +31,22 @@ class HomePageView(TemplateView):
         if viewPerm >= 2:
             announcements = Announcement.objects.all()
             events = Event.objects.all()
-            openShifts = ShiftInstance.objects.filter(Q(slots__gt=F('minSlots'))) # Just an example
+            openShifts = ShiftInstance.objects.filter(Q(slots__gt=F('staffCount') + F('volCount')))
         elif viewPerm == 1:
             announcements = Announcement.objects.filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
             events = Event.objects.filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
+            openShifts = ShiftInstance.objects.filter(Q(volSlots__gt=F('volCount')))
         else:
             announcements = Announcement.objects.filter(viewPerms='public')
             events = Event.objects.filter(viewPerms='public')
+            openShifts = []
 
         context['announcements'] = announcements[:6]
         context['events'] = events.filter(Q(startTime__gte=currentTime) | Q(endTime__gte=currentTime))[:10]
+        if openShifts:
+            context['openShifts'] = openShifts.filter(Q(date__gte=currentTime.date()))[:10]
+        else:
+            context['openShifts'] = openShifts
 
         return context
 

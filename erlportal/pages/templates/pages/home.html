@@ -27,5 +27,23 @@
                 {% endfor %}
             </div>
         </section>
+        <section class="row">
+            <div class="col-md-8">
+                <h2>Open Shifts</h2>
+                {% if openShifts %}
+                {% for shift in openShifts %}
+                <article>
+                    <a href="{% url 'shift-instance-detail' base_slug=shift.baseShift.slug uid=shift.uid %}"><h3>{{ shift.baseShift.name }}</h3></a>
+                    <h4>Date: {{ shift.date|date:"l, F jS, Y" }}</h4>
+                    <h4>{{ shift.startTime|date:"g:iA" }} - {{ shift.endTime|date:"g:iA" }}</h4>
+                    <p>{{ shift.description }}</p> 
+                </article>
+                {% endfor %}
+                {% else %}
+                <h2>No Open Shifts</h2>
+                <p>Did you sign in?</p>
+                {% endif %}
+            </div>
+        </section>
     </div>
 {% endblock content %}
