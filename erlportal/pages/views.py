@@ -32,21 +32,30 @@ class HomePageView(TemplateView):
             announcements = Announcement.objects.all()
             events = Event.objects.all()
             openShifts = ShiftInstance.objects.filter(Q(slots__gt=F('staffCount') + F('volCount')))
+            userShifts = ShiftInstance.objects.filter(staff=user)
         elif viewPerm == 1:
             announcements = Announcement.objects.filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
             events = Event.objects.filter(Q(viewPerms='volunteers') | Q(viewPerms='public'))
             openShifts = ShiftInstance.objects.filter(Q(volSlots__gt=F('volCount')))
+            userShifts = ShiftInstance.objects.filter(vols=user)
         else:
             announcements = Announcement.objects.filter(viewPerms='public')
             events = Event.objects.filter(viewPerms='public')
             openShifts = []
+            userShifts = []
+
 
         context['announcements'] = announcements[:6]
-        context['events'] = events.filter(Q(startTime__gte=currentTime) | Q(endTime__gte=currentTime))[:10]
+        context['events'] = events.filter(Q(startTime__gte=currentTime) | Q(endTime__gte=currentTime)).order_by('startTime', 'endTime')[:5]
         if openShifts:
-            context['openShifts'] = openShifts.filter(Q(date__gte=currentTime.date()))[:10]
+            context['openShifts'] = openShifts.filter(Q(date__gte=currentTime.date())).order_by('date', 'startTime', 'endTime')[:5]
         else:
             context['openShifts'] = openShifts
+
+        if userShifts:
+            context['userShifts'] = userShifts.filter(Q(date__gte=currentTime.date())).order_by('date', 'startTime', 'endTime')[:5]
+        else:
+            context['userShifts'] = userShifts
 
         return context
 
