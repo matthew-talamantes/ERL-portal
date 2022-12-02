@@ -1,66 +1,94 @@
 {% extends "pages/base.html" %}
 
 {% block content %}
-    <h1>Hello World!</h1>
-    <div class="container">
-        <div class="row">
-            <section class="col-md-6 mb-4">
-                <h2>Announcements</h2>
-                {% for item in announcements %}
-                    <article>
-                        <a href="{% url 'announcement-detail' item.pk %}"><h3>{{ item.title }}</h3></a>
-                        <h5>Posted On: {{ item.dateCreated|date:"M d Y" }}</h5>
-                        <h5>Posted By: {{ item.postedBy }}</h5>
-                    </article>
-                {% endfor %}
-            </section>
-            <section class="col-md-6 mb-4">
-                <h2>My Shifts</h2>
-                {% if userShifts %}
-                {% for shift in userShifts %}
-                <article>
-                    <a href="{% url 'shift-instance-detail' base_slug=shift.baseShift.slug uid=shift.uid %}"><h3>{{ shift.baseShift.name }}</h3></a>
+<div class="container">
+    <div class="row mt-4">
+        <section class="col-md-6 mb-4">
+            <h2>Announcements</h2>
+            {% for item in announcements %}
+            <article class="card mb-2">
+                <div class="card-header">
+                    <a href="{% url 'announcement-detail' item.pk %}">
+                        <h3>{{ item.title }}</h3>
+                    </a>
+                    <div class="card-meta">
+                        <p class="text-muted">Posted On: {{ item.dateCreated|date:"M d Y" }}</p>
+                        <p class="text-muted">Posted By: {{ item.postedBy }}</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% with description=item.description|safe %}
+                    <div>{{ description|truncatechars_html:150 }}</div>
+                    {% endwith %}
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+        <section class="col-md-6 mb-4">
+            <h2>My Shifts</h2>
+            {% if userShifts %}
+            {% for shift in userShifts %}
+            <article class="card mb-2">
+                <div class="card-header">
+                    <a href="{% url 'shift-instance-detail' base_slug=shift.baseShift.slug uid=shift.uid %}">
+                        <h3>{{ shift.baseShift.name }}</h3>
+                    </a>
+                </div>
+                <div class="card-body">
                     <h4>Date: {{ shift.date|date:"l, F jS, Y" }}</h4>
                     <h4>{{ shift.startTime|date:"g:iA" }} - {{ shift.endTime|date:"g:iA" }}</h4>
                     <p>{{ shift.description }}</p>
-                </article>
-                {% endfor %}
-                {% else %}
-                <h2>You are not currently signed up for any shifts</h2>
-                {% endif %}
-            </section>
-        </div>
-        <div class="row">
-            <section class="col-md-6 mb-4">
-                <h2>Events</h2>
-                {% if events %}
-                {% for item in events %}
-                <article>
-                    <a href="{% url 'event-detail' item.slug %}"><h3>{{ item.title }}</h3></a>
+                </div>
+            </article>
+            {% endfor %}
+            {% else %}
+            <h2>You are not currently signed up for any shifts</h2>
+            {% endif %}
+        </section>
+    </div>
+    <div class="row mb-4">
+        <section class="col-md-6 mb-4">
+            <h2>Events</h2>
+            {% if events %}
+            {% for item in events %}
+            <article class="card mb-2">
+                <div class="card-header">
+                    <a href="{% url 'event-detail' item.slug %}">
+                        <h3>{{ item.title }}</h3>
+                    </a>
+                </div>
+                <div class="card-body">
                     <h4>Start: {{ item.startTime|date:"g:iA D, M d, Y" }}</h4>
                     <h4>End: {{ item.endTime|date:"g:iA D, M d, Y" }}</h4>
-                </article>
-                {% endfor %}
-                {% else %}
-                <h3>No events found</h3>
-                {% endif %}
-            </section>
-            <section class="col-md-6 mb-4">
-                <h2>Open Shifts</h2>
-                {% if openShifts %}
-                {% for shift in openShifts %}
-                <article>
-                    <a href="{% url 'shift-instance-detail' base_slug=shift.baseShift.slug uid=shift.uid %}"><h3>{{ shift.baseShift.name }}</h3></a>
+                </div>
+            </article>
+            {% endfor %}
+            {% else %}
+            <h3>No events found</h3>
+            {% endif %}
+        </section>
+        <section class="col-md-6 mb-4">
+            <h2>Open Shifts</h2>
+            {% if openShifts %}
+            {% for shift in openShifts %}
+            <article class="card mb-2">
+                <div class="card-header">
+                    <a href="{% url 'shift-instance-detail' base_slug=shift.baseShift.slug uid=shift.uid %}">
+                        <h3>{{ shift.baseShift.name }}</h3>
+                    </a>
+                </div>
+                <div class="card-body">
                     <h4>Date: {{ shift.date|date:"l, F jS, Y" }}</h4>
                     <h4>{{ shift.startTime|date:"g:iA" }} - {{ shift.endTime|date:"g:iA" }}</h4>
-                    <p>{{ shift.description }}</p> 
-                </article>
-                {% endfor %}
-                {% else %}
-                <h2>No Open Shifts</h2>
-                <p>Did you sign in?</p>
-                {% endif %}
-            </section>
-        </div>
+                    <p>{{ shift.description }}</p>
+                </div>
+            </article>
+            {% endfor %}
+            {% else %}
+            <h2>No Open Shifts</h2>
+            <p>Did you sign in?</p>
+            {% endif %}
+        </section>
     </div>
+</div>
 {% endblock content %}

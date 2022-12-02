@@ -44,6 +44,26 @@ p {
           align-items: center;
 }
 
+.card-meta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 30px;
+}
+.card-meta p {
+  margin: 0;
+}
+
 #shifts-list .staffing {
   margin-left: auto;
   margin-right: auto;

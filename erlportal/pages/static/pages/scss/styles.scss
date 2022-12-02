@@ -35,6 +35,19 @@ p {
     align-items: center;
 }
 
+// Home Styles
+.card-meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+
+    p {
+        margin: 0;
+    }
+}
+
 // Shifts Calendar summary cards
 #shifts-list {
     // display: flex;
